@@ -96,3 +96,59 @@ class LayoutUtils {
     return BentoLayoutDetails(totalHeight: totalHeight, geometryMap: geometry);
   }
 }
+
+class MobileConfigMapper {
+  // inside MobileConfigMapper class...
+
+  static double getMobileHeight(TileSize size) {
+    switch (size) {
+      case TileSize.thin:
+      case TileSize.longHorizontal:
+      case TileSize.small:
+        return 85.0; // Compact bar height
+
+      case TileSize.standard:
+      case TileSize.longVertical:
+        return 200.0; // Standard card height
+      case TileSize.fullsize:
+        return 300.0; // Large square
+    }
+  }
+
+  static TileConfig getMobileConfig(TileConfig original) {
+    // If it's a Section Title, keep it as is
+    if (original.type == TileType.sectionTitle) {
+      return original;
+    }
+
+    // On Mobile, we generally want things to be full-width bars (thin)
+    // or standard rectangles. Massive squares (fullsize) often take up too much
+    // vertical scrolling space on mobile.
+
+    switch (original.tileSize) {
+      // Convert Small squares to Thin bars (like Linktree links)
+      case TileSize.small:
+        return original.copyWith(tileSize: TileSize.thin);
+
+      // Keep Standard (rectangular) as is, they look good on mobile
+      case TileSize.standard:
+        return original;
+
+      // Shrink massive 4x4 blocks to Standard rectangles so they don't dominate the screen
+      case TileSize.fullsize:
+        return original.copyWith(tileSize: TileSize.standard);
+
+      // Vertical strips usually need to become standard rectangles or they get cut off
+      case TileSize.longVertical:
+        return original.copyWith(tileSize: TileSize.standard);
+
+      // Horizontal strips work fine as thin bars
+      case TileSize.longHorizontal:
+        return original.copyWith(tileSize: TileSize.thin);
+
+      // Default fallback
+      case TileSize.thin:
+        return original;
+    }
+  }
+}

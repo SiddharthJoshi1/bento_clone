@@ -66,7 +66,7 @@ class SmartBentoTile extends StatelessWidget {
             const Spacer(),
             if (config.imagePath != null)
               Expanded(
-                flex: 3,
+                flex: 4,
                 child: Card(
                   clipBehavior: Clip.hardEdge,
                   margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
@@ -142,7 +142,7 @@ class SmartBentoTile extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
             children: [
-              _buildHeader(context),
+              _buildHeader(context, showIconAndTitleSideBySide: true),
               const Spacer(),
               if (config.url != null)
                 const Icon(Icons.arrow_outward, size: 16, color: Colors.grey),
@@ -251,7 +251,13 @@ class SmartBentoTile extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Text(
         config.title,
-        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+          fontWeight: FontWeight.bold,
+
+          color: getBackgroundCardColour().computeLuminance() < 0.5
+              ? Colors.black
+              : Colors.white,
+        ),
       ),
     );
   }
@@ -285,14 +291,47 @@ class SmartBentoTile extends StatelessWidget {
 
   // --- HELPERS ---
 
-  Widget _buildHeader(BuildContext context, {bool showIcon = false}) {
+  Widget _buildHeader(
+    BuildContext context, {
+    bool showIcon = false,
+    bool showIconAndTitleSideBySide = false,
+  }) {
     final linkEntity = locator<LinkRepository>().getLinkData(config.url ?? "");
+    if (showIconAndTitleSideBySide) {
+      return Row(
+        children: [
+          Card(
+            // margin: EdgeInsets.all(10),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadiusGeometry.all(Radius.circular(10)),
+            ),
+            color: Colors.white,
+            child: Padding(
+              padding: EdgeInsetsGeometry.all(10),
+              child: Icon(
+                color: linkEntity.brandColour.toColour(),
+                size: 20,
+                LinkIconMapping.getIcon(linkEntity.linkIcon),
+              ),
+            ),
+          ),
+          const SizedBox(width: 10),
+
+          Text(
+            config.title,
+            style: Theme.of(
+              context,
+            ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+          ),
+        ],
+      );
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         Card(
-          // margin: EdgeInsets.all(10),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadiusGeometry.all(Radius.circular(10)),
           ),
@@ -301,7 +340,7 @@ class SmartBentoTile extends StatelessWidget {
             padding: EdgeInsetsGeometry.all(10),
             child: Icon(
               color: linkEntity.brandColour.toColour(),
-              size: 30,
+              size: 25,
               LinkIconMapping.getIcon(linkEntity.linkIcon),
             ),
           ),
@@ -310,10 +349,9 @@ class SmartBentoTile extends StatelessWidget {
 
         Text(
           config.title,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: config.tileSize == TileSize.small ? 16 : 18,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 2),
         Text(
