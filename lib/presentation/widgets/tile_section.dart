@@ -1,9 +1,7 @@
 import 'package:bento_clone/domain/entities/tile_config.dart';
-import 'package:bento_clone/presentation/utils/sizing_utils.dart';
 import 'package:flutter/material.dart';
 
 import 'bento_grid/bento_sliver_list.dart';
-
 
 List<TileConfig> baseTiles = [
   // Row 1
