@@ -3,10 +3,12 @@ import 'package:bento_clone/presentation/utils/url_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../core/injector.dart';
 import '../../../../domain/entities/tile_config.dart';
 import '../../../../domain/repos/link_repo.dart';
 import '../../../utils/colour_extension.dart';
 import '../../../utils/icon_mapping.dart';
+import 'mouse_hover_effect.dart';
 
 class SmartBentoTile extends StatelessWidget {
   final TileConfig config;
@@ -284,7 +286,7 @@ class SmartBentoTile extends StatelessWidget {
   // --- HELPERS ---
 
   Widget _buildHeader(BuildContext context, {bool showIcon = false}) {
-    final linkEntity = LinkRepositoryImpl().getLinkData(config.url ?? "");
+    final linkEntity = locator<LinkRepository>().getLinkData(config.url ?? "");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -324,7 +326,7 @@ class SmartBentoTile extends StatelessWidget {
 
   Color getBackgroundCardColour() {
     if (config.type == TileType.link) {
-      return LinkRepositoryImpl()
+      return locator<LinkRepository>()
           .getLinkData(config.url ?? "")
           .brandColour
           .toSuperLightColour();
@@ -336,20 +338,28 @@ class SmartBentoTile extends StatelessWidget {
   }
 
   Widget getBackgroundCard(Widget child) {
-    return Card(
-      elevation: (config.type == TileType.sectionTitle) ? 0 : 2,
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-        // side: BorderSide(color: Colors.black12),
-        borderRadius: BorderRadius.circular(24),
-      ),
-      color: getBackgroundCardColour(),
-
-      child: InkWell(
-        onTap: config.url != null
-            ? () => launchUrl(Uri.parse(config.url!))
-            : null,
-        child: child,
+    return BentoInteractionEffect(
+      // Web Optimization: force open in new tab
+      onTap: config.url != null
+          ? () => launchUrl(
+              Uri.parse(config.url!),
+              mode: LaunchMode.externalApplication,
+            )
+          : null,
+      child: Card(
+        elevation: (config.type == TileType.sectionTitle) ? 0 : 2,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          // side: BorderSide(color: Colors.black12),
+          borderRadius: BorderRadius.circular(24),
+        ),
+        color: getBackgroundCardColour(),
+        child: InkWell(
+          onTap: config.url != null
+              ? () => launchUrl(Uri.parse(config.url!))
+              : null,
+          child: child,
+        ),
       ),
     );
   }
