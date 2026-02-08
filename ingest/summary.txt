@@ -1,4 +1,0 @@
-Directory: bento_clone
-Files analyzed: 322
-
-Estimated tokens: 93.3k

@@ -1,6 +1,6 @@
 name: bento_clone
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
@@ -24,3 +24,7 @@ flutter:
   assets:
     - assets/bubbles.png
     - assets/Sid Gen.png
+    - assets/SiD.png
+    - assets/git_graph.png
+    - assets/1635723301936.jpg
+    - assets/data/popular_links.json
