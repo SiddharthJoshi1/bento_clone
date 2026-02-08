@@ -30,7 +30,7 @@ List<TileConfig> baseTiles = [
     url: "https://www.linkedin.com/in/siddharth-joshi-/",
     type: TileType.link,
     tileSize: TileSize.standard, // The Big Box
-    imagePath: r"assets/1635723301936.jpg",
+    imagePath: "assets/1635723301936.jpg",
   ),
   TileConfig(
     title: "Get my CV.",
@@ -45,21 +45,21 @@ List<TileConfig> baseTiles = [
     tileSize: TileSize.fullsize,
     title: "Sometimes I write stuff. Come check it out!",
     url: "https://www.substack.com/@builtbysid",
-    imagePath: r"assets/Sid Gen.png",
+    imagePath: "assets/Sid Gen.png",
   ),
   TileConfig(
     type: TileType.link,
     tileSize: TileSize.standard,
     title: "My Personal Website.",
     url: "https://builtbysid.dev/",
-    imagePath: r"assets/SiD.png",
+    imagePath: "assets/SiD.png",
   ),
   TileConfig(
     type: TileType.link,
     tileSize: TileSize.standard,
     title: "Check out my Github.",
     url: "https://www.github.com/SiddharthJoshi1",
-    imagePath: r"assets/git_graph.png",
+    imagePath: "assets/git_graph.png",
   ),
   TileConfig.sectionTitleConfig(title: "Fancy working with me?"),
 
