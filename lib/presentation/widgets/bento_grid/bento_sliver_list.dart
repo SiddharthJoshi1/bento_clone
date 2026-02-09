@@ -1,6 +1,6 @@
+import 'package:bento_clone/presentation/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 import '../../../../domain/entities/tile_config.dart';
-import '../../utils/sizing_utils.dart';
 import 'layout/bento_grid_delegate.dart';
 import 'layout/utils/layout_utils.dart';
 import 'tiles/smart_bento_tile.dart';
@@ -12,7 +12,7 @@ class BentoSliverList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDesktop = SizingUtils.isDesktop(context);
+    final bool isDesktop = ScreenSizeUtils.isDesktop(context);
 
     return CustomScrollView(
       slivers: [

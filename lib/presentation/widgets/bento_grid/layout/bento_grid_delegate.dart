@@ -1,6 +1,5 @@
 import 'package:bento_clone/domain/entities/tile_config.dart';
-// ignore: unused_import
-import 'package:bento_clone/presentation/utils/sizing_utils.dart';
+import 'package:bento_clone/presentation/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -15,18 +14,13 @@ class BentoGridDelegate extends SliverGridDelegate {
 
   @override
   SliverGridLayout getLayout(SliverConstraints constraints) {
-    // How wide is the screen?
-    final double screenWidth = constraints.crossAxisExtent;
-
-    // How wide is one "column"? (We are assuming a 4-column grid)
-    int numberOfColumns = !SizingUtils.isDesktop(context) ? 2 : 4;
-    double columnWidth = screenWidth / numberOfColumns;
+    double columnWidth = 195.0; // Fixed column width for better control
 
     BentoLayoutDetails bentoLayoutDetails =
         LayoutUtils.buildSkylineAndReturnBentoLayoutDetails(
           tiles: tiles,
           columnWidth: columnWidth,
-          isMobile: !SizingUtils.isDesktop(context),
+          isMobile: !ScreenSizeUtils.isDesktop(context),
         );
 
     return BentoGridLayout(

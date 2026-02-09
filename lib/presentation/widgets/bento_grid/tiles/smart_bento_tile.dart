@@ -1,4 +1,3 @@
-import 'package:bento_clone/presentation/utils/sizing_utils.dart';
 import 'package:bento_clone/presentation/utils/url_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -8,7 +7,7 @@ import '../../../../domain/entities/tile_config.dart';
 import '../../../../domain/repos/link_repo.dart';
 import '../../../utils/colour_extension.dart';
 import '../../../utils/icon_mapping.dart';
-import '../layout/utils/app_styles.dart';
+import '../../../utils/app_styles.dart';
 import 'mouse_hover_effect.dart';
 
 class SmartBentoTile extends StatelessWidget {
@@ -43,14 +42,14 @@ class SmartBentoTile extends StatelessWidget {
 
   // 1. LINK LOGIC
   Widget _buildLinkLayout(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final bool isTablet = screenWidth < ResponsiveText.tabletBreakpoint;
+    final bool isTablet = ScreenSizeUtils.isTablet(context);
     TileConfig tileConfig = config;
-    if (!SizingUtils.isDesktop(context) &&
+    if (!ScreenSizeUtils.isDesktop(context) &&
         config.tileSize == TileSize.fullsize) {
       tileConfig = config.copyWith(tileSize: TileSize.standard);
     }
-    if (!SizingUtils.isDesktop(context) && config.tileSize == TileSize.small) {
+    if (!ScreenSizeUtils.isDesktop(context) &&
+        config.tileSize == TileSize.small) {
       tileConfig = config.copyWith(tileSize: TileSize.thin);
     }
     switch (tileConfig.tileSize) {
@@ -81,9 +80,12 @@ class SmartBentoTile extends StatelessWidget {
                     side: const BorderSide(color: Colors.black12),
                     borderRadius: AppRadii.card,
                   ),
-                  child: AspectRatio(
-                    aspectRatio: 16 / 9,
-                    child: Image.asset(config.imagePath!, fit: BoxFit.cover),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: AspectRatio(
+                      aspectRatio: 4 / 3,
+                      child: Image.asset(config.imagePath!, fit: BoxFit.cover),
+                    ),
                   ),
                 ),
               ),
@@ -183,11 +185,28 @@ class SmartBentoTile extends StatelessWidget {
     );
   }
 
+  TextStyle getTextStyleForTextLayout(BuildContext context) {
+    final bool isDark = getBackgroundCardColour().computeLuminance() < 0.5;
+    Color textColor = isDark ? Colors.white : Colors.black;
+    if (ScreenSizeUtils.isDesktop(context)) {
+      return ResponsiveText.titleSmall(context)!.copyWith(
+        fontStyle: FontStyle.italic,
+        fontWeight: FontWeight.w600,
+        color: textColor,
+      );
+    } else {
+      return ResponsiveText.titleSmall(context)!.copyWith(
+        fontStyle: FontStyle.italic,
+        fontWeight: FontWeight.w300,
+        color: textColor,
+      );
+    }
+  }
+
   // 3. TEXT LOGIC
   Widget _buildTextLayout(BuildContext context) {
     final isDark = getBackgroundCardColour().computeLuminance() < 0.5;
-    final screenWidth = MediaQuery.of(context).size.width;
-    final bool isNarrow = screenWidth < ResponsiveText.narrowBreakpoint;
+
     final textColor = isDark ? Colors.white : Colors.black;
 
     if (config.tileSize == TileSize.thin) {
@@ -215,29 +234,28 @@ class SmartBentoTile extends StatelessWidget {
       );
     }
     return Padding(
-      padding: const EdgeInsets.all(AppInsets.xl),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppInsets.xl,
+        vertical: AppInsets.m,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Icon(Icons.format_quote_outlined, size: AppIconSizes.l),
+            children: [
+              Icon(
+                Icons.bubble_chart_outlined,
+                size: AppIconSizes.l,
+                color: textColor,
+              ),
             ],
           ),
-          const SizedBox(height: AppInsets.m),
-          Expanded(
-            child: Text(
-              config.title,
-              style: isNarrow
-                  ? ResponsiveText.titleSmall(
-                      context,
-                    )?.copyWith(fontWeight: FontWeight.w600)
-                  : ResponsiveText.titleMedium(
-                      context,
-                    )?.copyWith(fontWeight: FontWeight.w600),
-              overflow: TextOverflow.fade,
-            ),
+          Spacer(),
+          Text(
+            config.title,
+            style: getTextStyleForTextLayout(context),
+            overflow: TextOverflow.fade,
           ),
         ],
       ),
@@ -248,11 +266,11 @@ class SmartBentoTile extends StatelessWidget {
   Widget _buildSectionTitle(BuildContext context) {
     final isDark = getBackgroundCardColour().computeLuminance() > 0.5;
     return Container(
-      alignment: Alignment.centerLeft,
+      alignment: Alignment.bottomLeft,
       padding: const EdgeInsets.only(left: AppInsets.s),
       child: Text(
         config.title,
-        style: ResponsiveText.titleMedium(context)?.copyWith(
+        style: ResponsiveText.titleSmall(context)?.copyWith(
           fontWeight: FontWeight.bold,
           color: isDark ? Colors.white : Colors.black,
         ),
@@ -304,8 +322,6 @@ class SmartBentoTile extends StatelessWidget {
     bool showIcon = false,
     bool showIconAndTitleSideBySide = false,
   }) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final bool isNarrow = screenWidth < ResponsiveText.narrowBreakpoint;
     final linkEntity = locator<LinkRepository>().getLinkData(config.url ?? "");
     const iconPadding = EdgeInsets.all(AppInsets.s);
 
@@ -328,7 +344,7 @@ class SmartBentoTile extends StatelessWidget {
           Text(
             overflow: TextOverflow.ellipsis,
             config.title,
-            style: isNarrow
+            style: ScreenSizeUtils.isNarrow(context)
                 ? ResponsiveText.labelLarge(
                     context,
                   )?.copyWith(fontWeight: FontWeight.bold)
@@ -360,7 +376,7 @@ class SmartBentoTile extends StatelessWidget {
         Text(
           // overflow: TextOverflow.ellipsis,
           config.title,
-          style: isNarrow
+          style: ScreenSizeUtils.isNarrow(context)
               ? ResponsiveText.labelLarge(
                   context,
                 )?.copyWith(fontWeight: FontWeight.bold)
@@ -368,7 +384,7 @@ class SmartBentoTile extends StatelessWidget {
                   context,
                 )?.copyWith(fontWeight: FontWeight.bold),
         ),
-        if (!isNarrow) ...[
+        if (!ScreenSizeUtils.isNarrow(context)) ...[
           const SizedBox(height: 2),
           Text(
             config.url?.getBasePath() ?? "",

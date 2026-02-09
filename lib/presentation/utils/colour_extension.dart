@@ -16,7 +16,7 @@ extension ColourConverter on String {
 
     // We keep the Hue and Saturation, but set Lightness to 95%
     // clamp(0.0, 1.0) ensures we don't crash if the math goes weird
-    final lightHsl = hsl.withLightness(0.95.clamp(0.0, 1.0));
+    final lightHsl = hsl.withLightness(0.90.clamp(0.0, 1.0));
 
     return lightHsl.toColor();
   }

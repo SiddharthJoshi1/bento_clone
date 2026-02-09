@@ -1,4 +1,4 @@
-import 'package:bento_clone/presentation/utils/sizing_utils.dart';
+import 'package:bento_clone/presentation/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
     //normal
 
     Widget widget = SizedBox.shrink();
-    if (SizingUtils.isDesktop(context)) {
+    if (ScreenSizeUtils.isDesktop(context)) {
       widget = Row(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -11,7 +11,7 @@ List<TileConfig> baseTiles = [
   ),
   TileConfig(
     title: "Bubbles: Breaking Down Complex Journeys",
-    url: "https://www.github.com",
+    url: "https://github.com/TinyBigLabs/bubbles_example",
     type: TileType.link,
     tileSize: TileSize.fullsize, // The Big Box
     imagePath: "assets/bubbles.png",

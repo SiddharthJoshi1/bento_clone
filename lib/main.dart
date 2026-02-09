@@ -20,6 +20,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       title: 'Sid | Product Engineer',
       theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
         useMaterial3: true,
         textTheme:
             GoogleFonts.interTextTheme(), // or GoogleFonts.dmSansTextTheme()

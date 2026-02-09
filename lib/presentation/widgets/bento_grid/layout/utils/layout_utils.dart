@@ -1,7 +1,7 @@
 import 'package:flutter/rendering.dart';
 
 import '../../../../../domain/entities/tile_config.dart';
-import 'size_utils.dart';
+import '../../../../utils/grid_size_utils.dart';
 
 class BentoLayoutDetails {
   final double totalHeight;
@@ -102,8 +102,10 @@ class MobileConfigMapper {
 
   static double getMobileHeight(TileSize size) {
     switch (size) {
-      case TileSize.thin:
       case TileSize.longHorizontal:
+        return 100.0; // Thin horizontal bars should be compact
+
+      case TileSize.thin:
       case TileSize.small:
         return 85.0; // Compact bar height
 

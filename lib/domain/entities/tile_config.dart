@@ -1,26 +1,8 @@
 import 'dart:core';
 
-import 'package:flutter/material.dart';
-
 enum TileSize { small, thin, standard, longHorizontal, longVertical, fullsize }
 
 enum TileType { sectionTitle, map, link, image, video, text }
-
-// class TileConfig {
-//   final String? title;
-//   final String? imagePath;
-//   final String? url;
-//   final TileSize tileSize;
-//   final TileType type;
-
-//   TileConfig({
-//     this.title,
-//     this.imagePath,
-//     this.tileSize = TileSize.standard,
-//     this.url,
-//     required this.type,
-//   });
-// }
 
 class TileConfig {
   final String title;
@@ -76,7 +58,7 @@ class TileConfig {
     );
   }
 
- TileConfig copyWith({
+  TileConfig copyWith({
     String? title,
     String? imagePath,
     String? url,
