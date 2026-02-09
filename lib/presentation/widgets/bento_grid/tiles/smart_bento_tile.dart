@@ -267,11 +267,11 @@ class SmartBentoTile extends StatelessWidget {
     final isDark = getBackgroundCardColour().computeLuminance() > 0.5;
     return Container(
       alignment: Alignment.bottomLeft,
-      padding: const EdgeInsets.only(left: AppInsets.s),
+      padding: const EdgeInsets.only(left: AppInsets.m),
       child: Text(
         config.title,
         style: ResponsiveText.titleSmall(context)?.copyWith(
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w600,
           color: isDark ? Colors.white : Colors.black,
         ),
       ),
@@ -419,7 +419,9 @@ class SmartBentoTile extends StatelessWidget {
       child: Card(
         elevation: (config.type == TileType.sectionTitle) ? 0 : 2,
         clipBehavior: Clip.antiAlias,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.card),
+        shape: config.type != TileType.sectionTitle
+            ? RoundedRectangleBorder(borderRadius: AppRadii.card)
+            : null,
         color: getBackgroundCardColour(),
         child: InkWell(
           onTap: config.url != null
