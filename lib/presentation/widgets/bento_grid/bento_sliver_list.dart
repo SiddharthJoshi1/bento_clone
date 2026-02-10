@@ -71,7 +71,9 @@ class BentoSliverList extends StatelessWidget {
           ),
           SliverToBoxAdapter(child: SizedBox(height: 20)),
           SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(
+              horizontal: ScreenSizeUtils.isNarrow(context) ? 0 : 0,
+            ),
             sliver: SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
                 final config = tiles[index];
@@ -82,6 +84,7 @@ class BentoSliverList extends StatelessWidget {
                 // // 2. Get the specific height for this tile type to prevent RenderFlex errors
                 final double height = MobileConfigMapper.getMobileHeight(
                   mobileConfig.tileSize,
+                  context,
                 );
 
                 return Padding(

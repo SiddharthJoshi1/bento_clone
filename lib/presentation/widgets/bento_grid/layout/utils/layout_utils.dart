@@ -1,3 +1,5 @@
+import 'package:bento_clone/presentation/utils/app_styles.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import '../../../../../domain/entities/tile_config.dart';
@@ -100,7 +102,12 @@ class LayoutUtils {
 class MobileConfigMapper {
   // inside MobileConfigMapper class...
 
-  static double getMobileHeight(TileSize size) {
+  static double getMobileHeight(TileSize size, BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+
+    final double heightFactor =
+        screenSize.height / 1000; // Base height is 800 for scaling
+
     switch (size) {
       case TileSize.longHorizontal:
         return 100.0; // Thin horizontal bars should be compact
@@ -111,7 +118,8 @@ class MobileConfigMapper {
 
       case TileSize.standard:
       case TileSize.longVertical:
-        return 200.0; // Standard card height
+        return 170.0;
+
       case TileSize.fullsize:
         return 300.0; // Large square
     }

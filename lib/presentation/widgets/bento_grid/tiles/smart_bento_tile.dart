@@ -96,30 +96,29 @@ class SmartBentoTile extends StatelessWidget {
         return Row(
           children: [
             Expanded(
-              flex: 5,
+              flex: 4,
               child: Padding(
-                padding: EdgeInsets.all(isTablet ? AppInsets.s : AppInsets.l),
+                padding: EdgeInsets.all(AppInsets.m),
                 child: _buildHeader(context, showIcon: true),
               ),
             ),
             if (config.imagePath != null)
               Expanded(
-                flex: 6,
+                flex: 4,
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                    right: AppInsets.m,
-                    top: AppInsets.l,
-                    bottom: AppInsets.l,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppInsets.xs,
+                    vertical: AppInsets.xs,
                   ),
                   child: Card(
                     clipBehavior: Clip.hardEdge,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       side: const BorderSide(color: Colors.black12),
-                      borderRadius: AppRadii.card,
+                      borderRadius: AppRadii.chip,
                     ),
                     child: AspectRatio(
-                      aspectRatio: 3 / 4,
+                      aspectRatio: 16 / 10,
                       child: Image.asset(config.imagePath!, fit: BoxFit.cover),
                     ),
                   ),
@@ -342,12 +341,17 @@ class SmartBentoTile extends StatelessWidget {
             ),
           ),
           const SizedBox(width: AppInsets.s),
-          Text(
-            overflow: TextOverflow.ellipsis,
-            config.title,
-            style: ResponsiveText.labelLarge(
-              context,
-            )?.copyWith(fontWeight: FontWeight.bold),
+          Wrap(
+            children: [
+              Text(
+                overflow: TextOverflow.ellipsis,
+                config.title,
+                maxLines: 3,
+                style: ResponsiveText.labelLarge(
+                  context,
+                )?.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ],
           ),
         ],
       );
@@ -370,12 +374,25 @@ class SmartBentoTile extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppInsets.s),
-        Text(
-          overflow: TextOverflow.ellipsis,
-          config.title,
-          style: ResponsiveText.labelLarge(
-            context,
-          )?.copyWith(fontWeight: FontWeight.bold),
+        Wrap(
+          children: [
+            ScreenSizeUtils.isNarrow(context)
+                ? Text(
+                    overflow: TextOverflow.ellipsis,
+                    config.title,
+                    style: ResponsiveText.labelSmall(
+                      context,
+                    )?.copyWith(fontWeight: FontWeight.bold),
+                  )
+                : Text(
+                    overflow: TextOverflow.ellipsis,
+                    config.title,
+                    maxLines: 3,
+                    style: ResponsiveText.labelMedium(
+                      context,
+                    )?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+          ],
         ),
         if (!ScreenSizeUtils.isNarrow(context)) ...[
           const SizedBox(height: 2),
@@ -390,10 +407,7 @@ class SmartBentoTile extends StatelessWidget {
 
   Color getBackgroundCardColour() {
     if (config.type == TileType.link) {
-      return locator<LinkRepository>()
-          .getLinkData(config.url ?? "")
-          .brandColour
-          .toSuperLightColour();
+      return config.colour != null ? config.colour!.toColour() : Colors.white;
     } else if (config.type == TileType.text) {
       return config.colour != null ? config.colour!.toColour() : Colors.white;
     } else {
@@ -413,9 +427,13 @@ class SmartBentoTile extends StatelessWidget {
         elevation: (config.type == TileType.sectionTitle) ? 0 : 2,
         clipBehavior: Clip.antiAlias,
         shape: config.type != TileType.sectionTitle
-            ? RoundedRectangleBorder(borderRadius: AppRadii.card)
+            ? RoundedRectangleBorder(
+                side: const BorderSide(color: Colors.black12),
+                borderRadius: AppRadii.card,
+              )
             : null,
         color: getBackgroundCardColour(),
+
         child: InkWell(
           onTap: config.url != null
               ? () => launchUrl(Uri.parse(config.url!))

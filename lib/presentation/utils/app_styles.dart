@@ -25,6 +25,7 @@ class ScreenSizeUtils {
 
 /// For consistent padding and spacing.
 class AppInsets {
+  static const double xs = 4.0; // Extra Small
   static const double s = 8.0; // Small
   static const double m = 16.0; // Medium
   static const double l = 20.0; // Large
