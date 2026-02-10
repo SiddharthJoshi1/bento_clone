@@ -7,7 +7,7 @@ class ScreenSizeUtils {
   // Breakpoints
   static const double desktopBreakpoint = 1200;
   static const double tabletBreakpoint = 800;
-  static const double narrowBreakpoint = 400; // For very small screens
+  static const double narrowBreakpoint = 425; // For very small screens
 
   static bool isDesktop(BuildContext context) {
     return MediaQuery.of(context).size.width >= desktopBreakpoint;
@@ -19,7 +19,7 @@ class ScreenSizeUtils {
 
   static bool isTablet(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    return width >= narrowBreakpoint && width < desktopBreakpoint;
+    return width > narrowBreakpoint && width < desktopBreakpoint;
   }
 }
 
@@ -52,7 +52,7 @@ class ResponsiveText {
   // Base font sizes for mobile
   static const double _baseTitleLarge = 22.0;
   static const double _baseTitleMedium = 18.0;
-  static const double _baseTitleSmall = 15.0;
+  static const double _baseTitleSmall = 16.0;
   static const double _baseLabelLarge = 14.0;
   static const double _baseLabelMedium = 13.0;
   static const double _baseLabelSmall = 12.0;

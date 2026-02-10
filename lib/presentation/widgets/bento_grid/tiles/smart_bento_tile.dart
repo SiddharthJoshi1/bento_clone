@@ -188,8 +188,8 @@ class SmartBentoTile extends StatelessWidget {
   TextStyle getTextStyleForTextLayout(BuildContext context) {
     final bool isDark = getBackgroundCardColour().computeLuminance() < 0.5;
     Color textColor = isDark ? Colors.white : Colors.black;
-    if (ScreenSizeUtils.isDesktop(context)) {
-      return ResponsiveText.titleSmall(context)!.copyWith(
+    if (ScreenSizeUtils.isTablet(context)) {
+      return ResponsiveText.titleMedium(context)!.copyWith(
         fontStyle: FontStyle.italic,
         fontWeight: FontWeight.w600,
         color: textColor,
@@ -197,8 +197,9 @@ class SmartBentoTile extends StatelessWidget {
     } else {
       return ResponsiveText.titleSmall(context)!.copyWith(
         fontStyle: FontStyle.italic,
-        fontWeight: FontWeight.w300,
+        fontWeight: FontWeight.w600,
         color: textColor,
+        overflow: TextOverflow.ellipsis,
       );
     }
   }
@@ -344,13 +345,9 @@ class SmartBentoTile extends StatelessWidget {
           Text(
             overflow: TextOverflow.ellipsis,
             config.title,
-            style: ScreenSizeUtils.isNarrow(context)
-                ? ResponsiveText.labelLarge(
-                    context,
-                  )?.copyWith(fontWeight: FontWeight.bold)
-                : ResponsiveText.titleSmall(
-                    context,
-                  )?.copyWith(fontWeight: FontWeight.bold),
+            style: ResponsiveText.labelLarge(
+              context,
+            )?.copyWith(fontWeight: FontWeight.bold),
           ),
         ],
       );
@@ -374,15 +371,11 @@ class SmartBentoTile extends StatelessWidget {
         ),
         const SizedBox(height: AppInsets.s),
         Text(
-          // overflow: TextOverflow.ellipsis,
+          overflow: TextOverflow.ellipsis,
           config.title,
-          style: ScreenSizeUtils.isNarrow(context)
-              ? ResponsiveText.labelLarge(
-                  context,
-                )?.copyWith(fontWeight: FontWeight.bold)
-              : ResponsiveText.titleSmall(
-                  context,
-                )?.copyWith(fontWeight: FontWeight.bold),
+          style: ResponsiveText.labelLarge(
+            context,
+          )?.copyWith(fontWeight: FontWeight.bold),
         ),
         if (!ScreenSizeUtils.isNarrow(context)) ...[
           const SizedBox(height: 2),

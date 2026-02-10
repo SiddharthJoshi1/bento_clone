@@ -49,7 +49,7 @@ class BentoSliverList extends StatelessWidget {
           SliverToBoxAdapter(child: SizedBox(height: 50)),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: Text(
                 "Sid",
                 style: Theme.of(
@@ -61,7 +61,7 @@ class BentoSliverList extends StatelessWidget {
           SliverToBoxAdapter(child: SizedBox(height: 10)),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: Text(
                 softWrap: true,
                 "Product Engineer who builds high-quality, scalable applications. My goal is to create software people will love.",
@@ -69,7 +69,7 @@ class BentoSliverList extends StatelessWidget {
               ),
             ),
           ),
-          SliverToBoxAdapter(child: SizedBox(height: 40)),
+          SliverToBoxAdapter(child: SizedBox(height: 20)),
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             sliver: SliverList(
@@ -96,8 +96,6 @@ class BentoSliverList extends StatelessWidget {
             ),
           ),
         ],
-
-        const SliverToBoxAdapter(child: SizedBox(height: 100)),
       ],
     );
   }
