@@ -100,7 +100,7 @@ class LinkRepositoryImpl implements LinkRepository {
     'github': LinkConfig(
       linkTitle: 'GitHub',
       linkIcon: 'fa-brands fa-github',
-      brandColour: '#181717',
+      brandColour: '#000000',
     ),
     'medium': LinkConfig(
       linkTitle: 'Medium',

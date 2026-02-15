@@ -379,6 +379,7 @@ class SmartBentoTile extends StatelessWidget {
             ScreenSizeUtils.isNarrow(context)
                 ? Text(
                     overflow: TextOverflow.ellipsis,
+                    maxLines: 3,
                     config.title,
                     style: ResponsiveText.labelSmall(
                       context,
@@ -407,7 +408,14 @@ class SmartBentoTile extends StatelessWidget {
 
   Color getBackgroundCardColour() {
     if (config.type == TileType.link) {
-      return config.colour != null ? config.colour!.toColour() : Colors.white;
+      String brandColour = locator<LinkRepository>()
+          .getLinkData(config.url ?? "")
+          .brandColour;
+
+      return brandColour == "#000000" || brandColour == "#FFFFFF" ? Colors.white : locator<LinkRepository>()
+          .getLinkData(config.url ?? "")
+          .brandColour
+          .toSuperLightColour();
     } else if (config.type == TileType.text) {
       return config.colour != null ? config.colour!.toColour() : Colors.white;
     } else {
