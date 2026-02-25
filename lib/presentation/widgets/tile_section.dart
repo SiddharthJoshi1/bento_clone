@@ -35,7 +35,7 @@ List<TileConfig> baseTiles = [
   TileConfig(
     title: "Get my CV.",
     url:
-        "https://builtbysid.dev/assets/data/Siddharth%20Joshi%20CV%20Web%20Copy.pdf",
+        "https://sidjoshi.notion.site/CV-31282118ee9080fe8e51e36781755b9d?pvs=143",
     type: TileType.link,
     tileSize: TileSize.small, // The small Box
   ),
@@ -49,17 +49,10 @@ List<TileConfig> baseTiles = [
   ),
   TileConfig(
     type: TileType.link,
-    tileSize: TileSize.standard,
-    title: "My Personal Website.",
-    url: "https://builtbysid.dev/",
-    imagePath: "assets/SiD.png",
-  ),
-  TileConfig(
-    type: TileType.link,
-    tileSize: TileSize.standard,
+    tileSize: TileSize.fullsize,
     title: "Check out my Github.",
     url: "https://www.github.com/SiddharthJoshi1",
-    imagePath: "assets/git_graph.png",
+    imagePath: "assets/untitled_dragon_game.gif",
   ),
   TileConfig.sectionTitleConfig(title: "Fancy working with me?"),
 
