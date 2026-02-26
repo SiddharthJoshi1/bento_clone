@@ -83,7 +83,7 @@ class SmartBentoTile extends StatelessWidget {
                   child: SizedBox(
                     width: double.infinity,
                     child: AspectRatio(
-                      aspectRatio: 4 / 3,
+                      aspectRatio: 1,
                       child: Image.asset(config.imagePath!, fit: BoxFit.cover),
                     ),
                   ),
@@ -106,9 +106,10 @@ class SmartBentoTile extends StatelessWidget {
               Expanded(
                 flex: 4,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppInsets.xs,
-                    vertical: AppInsets.xs,
+                  padding: const EdgeInsets.only(
+                    right: AppInsets.m,
+                    top: AppInsets.s,
+                    bottom: AppInsets.s,
                   ),
                   child: Card(
                     clipBehavior: Clip.hardEdge,
@@ -118,7 +119,7 @@ class SmartBentoTile extends StatelessWidget {
                       borderRadius: AppRadii.chip,
                     ),
                     child: AspectRatio(
-                      aspectRatio: 16 / 10,
+                      aspectRatio: 1,
                       child: Image.asset(config.imagePath!, fit: BoxFit.cover),
                     ),
                   ),
@@ -412,10 +413,12 @@ class SmartBentoTile extends StatelessWidget {
           .getLinkData(config.url ?? "")
           .brandColour;
 
-      return brandColour == "#000000" || brandColour == "#FFFFFF" ? Colors.white : locator<LinkRepository>()
-          .getLinkData(config.url ?? "")
-          .brandColour
-          .toSuperLightColour();
+      return brandColour == "#000000" || brandColour == "#FFFFFF"
+          ? Colors.white
+          : locator<LinkRepository>()
+                .getLinkData(config.url ?? "")
+                .brandColour
+                .toSuperLightColour();
     } else if (config.type == TileType.text) {
       return config.colour != null ? config.colour!.toColour() : Colors.white;
     } else {
