@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/responsive/breakpoints.dart';
 import '../../../../../domain/entities/tile_config.dart';
 import '../../../../utils/app_styles.dart';
 
@@ -21,7 +20,7 @@ class ImageTileRenderer extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [Colors.transparent, Colors.black.withValues(alpha: 0.6)],
+              colors: [AppColors.imageGradientStart, AppColors.imageGradientEnd],
             ),
           ),
         ),
@@ -33,7 +32,7 @@ class ImageTileRenderer extends StatelessWidget {
             config.title,
             style: ResponsiveText.titleSmall(
               context,
-            )?.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+            )?.copyWith(color: AppColors.textOnDark, fontWeight: FontWeight.bold),
           ),
         ),
       ],

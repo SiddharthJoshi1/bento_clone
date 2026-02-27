@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 /// Padding values used within tile content areas.
 class TilePadding {
-  TilePadding._();
 
   /// Standard padding for tile headers and content (20px).
   static const EdgeInsets standard = EdgeInsets.all(20.0);
@@ -39,7 +38,6 @@ class TilePadding {
 
 /// Spacing values (SizedBox gaps) used between tile elements.
 class TileSpacing {
-  TileSpacing._();
 
   /// Small gap between icon and title (8px).
   static const SizedBox small = SizedBox(height: 8.0);
@@ -53,7 +51,6 @@ class TileSpacing {
 
 /// Image sizing ratios used in tile image cards.
 class TileImageSizing {
-  TileImageSizing._();
 
   /// Square image aspect ratio (1:1).
   static const double squareAspectRatio = 1.0;

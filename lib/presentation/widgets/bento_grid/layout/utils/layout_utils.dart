@@ -1,5 +1,3 @@
-import 'package:bento_clone/presentation/utils/sizing/sizing_strategies.dart';
-import 'package:bento_clone/presentation/utils/sizing/tile_sizing_strategy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 

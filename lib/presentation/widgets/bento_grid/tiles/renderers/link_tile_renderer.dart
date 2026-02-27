@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../../../core/injector.dart';
 import '../../../../../domain/entities/tile_config.dart';
 import '../../../../../domain/repos/link_repo.dart';
-import '../../../../../core/responsive/breakpoints.dart';
 import '../../../../utils/app_styles.dart';
 import '../../../../utils/colour_extension.dart';
 import '../../../../utils/icon_mapping.dart';
@@ -46,7 +45,6 @@ class LinkTileRenderer extends StatelessWidget {
                   clipBehavior: Clip.hardEdge,
                   margin: TilePadding.imageCard,
                   elevation: 0,
-                  color: _getBackgroundColour(),
                   shape: RoundedRectangleBorder(
                     side: const BorderSide(color: Colors.black12),
                     borderRadius: AppRadii.card,
@@ -210,11 +208,4 @@ class LinkTileRenderer extends StatelessWidget {
     );
   }
 
-  Color _getBackgroundColour() {
-    final brandColour =
-        locator<LinkRepository>().getLinkData(config.url ?? "").brandColour;
-    return brandColour == "#000000" || brandColour == "#FFFFFF"
-        ? Colors.white
-        : brandColour.toSuperLightColour();
-  }
 }

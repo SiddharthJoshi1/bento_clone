@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/responsive/breakpoints.dart';
 import '../../../../../domain/entities/tile_config.dart';
 import '../../../../utils/app_styles.dart';
 
@@ -14,11 +13,11 @@ class MapTileRenderer extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        Container(color: Colors.blue[100]),
+        Container(color: AppColors.mapBackground),
         const Center(
           child: Icon(
             Icons.location_on,
-            color: Colors.red,
+            color: AppColors.mapPin,
             size: AppIconSizes.xl,
           ),
         ),
@@ -31,14 +30,14 @@ class MapTileRenderer extends StatelessWidget {
               vertical: AppInsets.s / 2,
             ),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.mapLabelBackground,
               borderRadius: BorderRadius.circular(AppInsets.s),
             ),
             child: Text(
               config.title,
               style: ResponsiveText.caption(
                 context,
-              )?.copyWith(fontWeight: FontWeight.bold, color: Colors.black),
+              )?.copyWith(fontWeight: FontWeight.bold, color: AppColors.textPrimary),
             ),
           ),
         ),

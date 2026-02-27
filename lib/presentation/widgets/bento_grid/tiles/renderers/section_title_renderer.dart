@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/responsive/breakpoints.dart';
 import '../../../../../domain/entities/tile_config.dart';
 import '../../../../utils/app_styles.dart';
-import '../../../../utils/colour_extension.dart';
 
 class SectionTitleRenderer extends StatelessWidget {
   final TileConfig config;
@@ -12,8 +10,6 @@ class SectionTitleRenderer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = _backgroundColour.computeLuminance() < 0.5;
-
     return Container(
       alignment: Alignment.bottomLeft,
       padding: const EdgeInsets.only(left: AppInsets.m),
@@ -21,12 +17,8 @@ class SectionTitleRenderer extends StatelessWidget {
         config.title,
         style: ResponsiveText.titleSmall(context)?.copyWith(
           fontWeight: FontWeight.w600,
-          color: isDark ? Colors.white : Colors.black,
         ),
       ),
     );
   }
-
-  Color get _backgroundColour =>
-      config.colour != null ? config.colour!.toColour() : Colors.white;
 }

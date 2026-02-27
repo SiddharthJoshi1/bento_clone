@@ -1,7 +1,7 @@
 import 'package:bento_clone/presentation/pages/home_page.dart';
+import 'package:bento_clone/presentation/theme/app_theme.dart';
 import 'package:bento_clone/presentation/widgets/profile_section.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'core/injector.dart';
 import 'presentation/widgets/tile_section.dart';
@@ -19,18 +19,7 @@ class MainApp extends StatelessWidget {
     // Initialize GetIt
     return MaterialApp(
       title: 'Sid | Product Engineer',
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        useMaterial3: true,
-        textTheme:
-            GoogleFonts.interTextTheme(), // or GoogleFonts.dmSansTextTheme()
-        // This forces ALL cards to have that Bento roundness
-        cardTheme: CardThemeData(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(28),
-          ),
-        ),
-      ),
+      theme: AppTheme.light,
       home: HomePage(
         profileWidget: ProfileSection(),
         tileSectionWidget: TileSection(),

@@ -5,7 +5,6 @@ import '../../../../core/injector.dart';
 import '../../../../domain/entities/tile_config.dart';
 import '../../../../domain/repos/link_repo.dart';
 import '../../../utils/colour_extension.dart';
-import '../../../utils/app_styles.dart';
 import 'mouse_hover_effect.dart';
 import 'renderers/image_tile_renderer.dart';
 import 'renderers/link_tile_renderer.dart';
@@ -71,12 +70,6 @@ class SmartBentoTile extends StatelessWidget {
       child: Card(
         elevation: config.type == TileType.sectionTitle ? 0 : 2,
         clipBehavior: Clip.antiAlias,
-        shape: config.type != TileType.sectionTitle
-            ? RoundedRectangleBorder(
-                side: const BorderSide(color: Colors.black12),
-                borderRadius: AppRadii.card,
-              )
-            : null,
         color: _getBackgroundCardColour(),
         child: InkWell(
           onTap: config.url != null

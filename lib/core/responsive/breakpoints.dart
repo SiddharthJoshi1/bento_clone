@@ -22,7 +22,7 @@ import 'package:flutter/material.dart';
 /// }
 /// ```
 class Breakpoints {
-  Breakpoints._();
+
 
   /// Minimum width to be considered a desktop screen.
   static const double desktop = 1200.0;
@@ -65,8 +65,6 @@ class Breakpoints {
 /// on [Breakpoints]. Always returns styles from the active theme so colours
 /// and font families stay consistent.
 class ResponsiveText {
-  ResponsiveText._();
-
   // Base font sizes (mobile-first)
   static const double _titleLarge = 22.0;
   static const double _titleMedium = 18.0;
