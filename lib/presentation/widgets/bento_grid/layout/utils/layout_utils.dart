@@ -1,4 +1,5 @@
-import 'package:bento_clone/presentation/utils/app_styles.dart';
+import 'package:bento_clone/presentation/utils/sizing/sizing_strategies.dart';
+import 'package:bento_clone/presentation/utils/sizing/tile_sizing_strategy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -17,7 +18,11 @@ class LayoutUtils {
     required List<TileConfig> tiles,
     required double columnWidth,
     bool isMobile = false,
+    TileSizingStrategy? strategy,
   }) {
+    final TileSizingStrategy sizingStrategy =
+        strategy ?? (isMobile ? const MobileSizingStrategy() : const DesktopSizingStrategy());
+
     final Map<int, SliverGridGeometry> geometry = {};
     // Setup the "Skyline" (Tracking the bottom of each column)
     // We start with 4 columns, all at Y=0.
@@ -33,9 +38,7 @@ class LayoutUtils {
       final tile = tiles[i];
 
       // A. MAP THE ENUM TO NUMBERS
-      GridDimension gridDimension = isMobile
-          ? GridSizeUtils.getMobileGridDimensions(tile.tileSize)
-          : GridSizeUtils.getDesktopGridDimensions(tile.tileSize);
+      GridDimension gridDimension = sizingStrategy.getDimensions(tile.tileSize);
       int crossAxisCount = gridDimension.width; // Width in columns (1-4)
       double mainAxisCount = gridDimension.height; // Height in units
 
@@ -103,10 +106,6 @@ class MobileConfigMapper {
   // inside MobileConfigMapper class...
 
   static double getMobileHeight(TileSize size, BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-
-    final double heightFactor =
-        screenSize.height / 1000; // Base height is 800 for scaling
 
     switch (size) {
       case TileSize.longHorizontal:

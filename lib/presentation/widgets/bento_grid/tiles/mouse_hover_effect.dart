@@ -1,3 +1,4 @@
+import 'package:bento_clone/core/constants.dart';
 import 'package:flutter/material.dart';
 
 class BentoInteractionEffect extends StatefulWidget {
@@ -31,7 +32,7 @@ class _BentoInteractionEffectState extends State<BentoInteractionEffect> {
         child: AnimatedScale(
           // Logic: Squish when clicked (0.98), Scale up when hovered (1.02), else normal (1.0)
           scale: _isPressed ? 0.98 : (_isHovered ? 1.02 : 1.0),
-          duration: const Duration(milliseconds: 200),
+          duration: const Duration(milliseconds: AnimationConstants.tileScaleDuration),
           curve: Curves.easeOutCubic, // The "Bento" springy feel
           child: widget.child,
         ),

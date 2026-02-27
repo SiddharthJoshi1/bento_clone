@@ -1,3 +1,5 @@
+import 'package:bento_clone/core/constants.dart';
+import 'package:bento_clone/core/responsive/breakpoints.dart';
 import 'package:bento_clone/domain/entities/tile_config.dart';
 import 'package:bento_clone/presentation/utils/app_styles.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +16,13 @@ class BentoGridDelegate extends SliverGridDelegate {
 
   @override
   SliverGridLayout getLayout(SliverConstraints constraints) {
-    double columnWidth = 195.0; // Fixed column width for better control
+    double columnWidth = LayoutConstants.columnWidth;
 
     BentoLayoutDetails bentoLayoutDetails =
         LayoutUtils.buildSkylineAndReturnBentoLayoutDetails(
           tiles: tiles,
           columnWidth: columnWidth,
-          isMobile: !ScreenSizeUtils.isDesktop(context),
+          isMobile: !Breakpoints.isDesktop(context),
         );
 
     return BentoGridLayout(

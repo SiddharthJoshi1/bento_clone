@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
     //normal
 
     Widget widget = SizedBox.shrink();
-    if (ScreenSizeUtils.isDesktop(context)) {
+    if (Breakpoints.isDesktop(context)) {
       widget = Row(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.stretch,

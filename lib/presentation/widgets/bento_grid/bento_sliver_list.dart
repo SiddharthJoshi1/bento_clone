@@ -1,3 +1,4 @@
+import 'package:bento_clone/core/responsive/breakpoints.dart';
 import 'package:bento_clone/presentation/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 import '../../../../domain/entities/tile_config.dart';
@@ -12,7 +13,7 @@ class BentoSliverList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDesktop = ScreenSizeUtils.isDesktop(context);
+    final bool isDesktop = Breakpoints.isDesktop(context);
 
     return CustomScrollView(
       slivers: [
@@ -72,7 +73,7 @@ class BentoSliverList extends StatelessWidget {
           SliverToBoxAdapter(child: SizedBox(height: 20)),
           SliverPadding(
             padding: EdgeInsets.symmetric(
-              horizontal: ScreenSizeUtils.isNarrow(context) ? 0 : 0,
+              horizontal: Breakpoints.isNarrow(context) ? 0 : 0,
             ),
             sliver: SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {

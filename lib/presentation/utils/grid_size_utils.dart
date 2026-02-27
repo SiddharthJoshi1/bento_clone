@@ -1,4 +1,8 @@
 import 'package:bento_clone/domain/entities/tile_config.dart';
+import 'package:bento_clone/presentation/utils/sizing/sizing_strategies.dart';
+
+export 'package:bento_clone/presentation/utils/sizing/tile_sizing_strategy.dart';
+export 'package:bento_clone/presentation/utils/sizing/sizing_strategies.dart';
 
 class GridDimension {
   final int width;
@@ -7,40 +11,15 @@ class GridDimension {
   GridDimension({required this.width, required this.height});
 }
 
+/// @deprecated Use [DesktopSizingStrategy] or [MobileSizingStrategy] directly.
+/// Kept as a thin delegate so existing call sites compile without changes.
 class GridSizeUtils {
-  static GridDimension getDesktopGridDimensions(TileSize tilesize) {
-    switch (tilesize) {
-      case TileSize.fullsize: // 4x4
-        return GridDimension(width: 2, height: 2);
+  static const _desktop = DesktopSizingStrategy();
+  static const _mobile = MobileSizingStrategy();
 
-      case TileSize.standard: // 4x2
-        return GridDimension(width: 2, height: 1);
+  static GridDimension getDesktopGridDimensions(TileSize tilesize) =>
+      _desktop.getDimensions(tilesize);
 
-      case TileSize.small: // 2x2
-        return GridDimension(width: 1, height: 1);
-
-      case TileSize.thin: // 1x4
-        return GridDimension(width: 2, height: 0.5);
-
-      case TileSize.longVertical:
-        return GridDimension(width: 1, height: 2);
-
-      case TileSize.longHorizontal:
-        return GridDimension(width: 4, height: 0.5);
-    }
-  }
-
-  static GridDimension getMobileGridDimensions(TileSize tilesize) {
-    switch (tilesize) {
-      case TileSize.fullsize:
-      case TileSize.standard:
-      case TileSize.longVertical:
-        return GridDimension(width: 2, height: 1);
-
-      case TileSize.small:
-      case TileSize.thin:
-      case TileSize.longHorizontal:
-        return GridDimension(width: 2, height: 0.5);
-    }
-  }
+  static GridDimension getMobileGridDimensions(TileSize tilesize) =>
+      _mobile.getDimensions(tilesize);
 }
