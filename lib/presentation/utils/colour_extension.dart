@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
 
+extension ColourBrightness on Color {
+  /// True when this colour is dark enough to warrant white text on top.
+  bool get isDark => computeLuminance() < 0.5;
+
+  /// Returns [Colors.white] or [Colors.black] — whichever is more
+  /// readable as text on top of this colour.
+  Color get contrastingTextColour => isDark ? Colors.white : Colors.black;
+}
+
 extension ColourConverter on String {
   /// Converts string like "#E1306C" to Color(0xFFE1306C)
   Color toColour() {

@@ -4,19 +4,25 @@ import '../../../../../core/injector.dart';
 import '../../../../../domain/entities/tile_config.dart';
 import '../../../../../domain/repos/link_repo.dart';
 import '../../../../utils/app_styles.dart';
-import '../../../../utils/colour_extension.dart';
+import '../../../../utils/colour_extension.dart'; // ColourBrightness + ColourConverter
 import '../../../../utils/icon_mapping.dart';
 import '../../../../utils/tile_constants.dart';
 import '../../../../utils/url_extension.dart';
 
 class LinkTileRenderer extends StatelessWidget {
   final TileConfig config;
+  final Color backgroundColour;
 
-  const LinkTileRenderer({super.key, required this.config});
+  const LinkTileRenderer({
+    super.key,
+    required this.config,
+    required this.backgroundColour,
+  });
 
   @override
   Widget build(BuildContext context) {
     TileConfig tileConfig = config;
+    final Color textColour = backgroundColour.contrastingTextColour;
 
     if (!Breakpoints.isDesktop(context) &&
         config.tileSize == TileSize.fullsize) {
@@ -35,7 +41,7 @@ class LinkTileRenderer extends StatelessWidget {
           children: [
             Padding(
               padding: TilePadding.standard,
-              child: _buildHeader(context, showIcon: true),
+              child: _buildHeader(context, textColour: textColour, showIcon: true),
             ),
             const Spacer(),
             if (config.imagePath != null)
@@ -68,7 +74,7 @@ class LinkTileRenderer extends StatelessWidget {
               flex: 4,
               child: Padding(
                 padding: TilePadding.compact,
-                child: _buildHeader(context, showIcon: true),
+                child: _buildHeader(context, textColour: textColour, showIcon: true),
               ),
             ),
             if (config.imagePath != null)
@@ -96,7 +102,7 @@ class LinkTileRenderer extends StatelessWidget {
       case TileSize.small:
         return Padding(
           padding: TilePadding.standard,
-          child: _buildHeader(context, showIcon: true),
+          child: _buildHeader(context, textColour: textColour, showIcon: true),
         );
 
       case TileSize.thin:
@@ -105,13 +111,13 @@ class LinkTileRenderer extends StatelessWidget {
           padding: TilePadding.horizontalCompact,
           child: Row(
             children: [
-              _buildHeader(context, showIconAndTitleSideBySide: true),
+              _buildHeader(context, textColour: textColour, showIconAndTitleSideBySide: true),
               const Spacer(),
               if (config.url != null)
-                const Icon(
+                Icon(
                   Icons.arrow_outward,
                   size: AppIconSizes.s,
-                  color: Colors.grey,
+                  color: textColour,
                 ),
             ],
           ),
@@ -121,11 +127,15 @@ class LinkTileRenderer extends StatelessWidget {
 
   Widget _buildHeader(
     BuildContext context, {
+    required Color textColour,
     bool showIcon = false,
     bool showIconAndTitleSideBySide = false,
   }) {
     final linkEntity = locator<LinkRepository>().getLinkData(config.url ?? "");
     const iconPadding = EdgeInsets.all(AppInsets.s);
+    // URL caption is always subdued — the background is always very light
+    // for link tiles (toSuperLightColour sets lightness to 90%), so grey reads fine.
+    final captionColour = textColour.withValues(alpha: 0.55);
 
     if (showIconAndTitleSideBySide) {
       return Row(
@@ -151,7 +161,7 @@ class LinkTileRenderer extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: ResponsiveText.labelLarge(
                   context,
-                )?.copyWith(fontWeight: FontWeight.bold),
+                )?.copyWith(fontWeight: FontWeight.bold, color: textColour),
               ),
             ],
           ),
@@ -185,7 +195,7 @@ class LinkTileRenderer extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: ResponsiveText.labelSmall(
                       context,
-                    )?.copyWith(fontWeight: FontWeight.bold),
+                    )?.copyWith(fontWeight: FontWeight.bold, color: textColour),
                   )
                 : Text(
                     config.title,
@@ -193,7 +203,7 @@ class LinkTileRenderer extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: ResponsiveText.labelMedium(
                       context,
-                    )?.copyWith(fontWeight: FontWeight.bold),
+                    )?.copyWith(fontWeight: FontWeight.bold, color: textColour),
                   ),
           ],
         ),
@@ -201,7 +211,7 @@ class LinkTileRenderer extends StatelessWidget {
           TileSpacing.tiny,
           Text(
             config.url?.getBasePath() ?? "",
-            style: ResponsiveText.caption(context),
+            style: ResponsiveText.caption(context)?.copyWith(color: captionColour),
           ),
         ],
       ],

@@ -10,6 +10,11 @@ class SectionTitleRenderer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Section titles sit outside bento cards on the scaffold background,
+    // so their text colour must follow the active theme.
+    final Color textColour =
+        Theme.of(context).colorScheme.onSurface;
+
     return Container(
       alignment: Alignment.bottomLeft,
       padding: const EdgeInsets.only(left: AppInsets.m),
@@ -17,6 +22,7 @@ class SectionTitleRenderer extends StatelessWidget {
         config.title,
         style: ResponsiveText.titleSmall(context)?.copyWith(
           fontWeight: FontWeight.w600,
+          color: textColour,
         ),
       ),
     );

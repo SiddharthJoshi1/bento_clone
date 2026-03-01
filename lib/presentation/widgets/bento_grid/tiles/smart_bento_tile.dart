@@ -21,14 +21,15 @@ class SmartBentoTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _buildBackgroundCard(_buildRenderer(context));
+    final backgroundColour = _getBackgroundCardColour();
+    return _buildBackgroundCard(_buildRenderer(context, backgroundColour), backgroundColour);
   }
 
   /// Delegates to the correct renderer based on tile type.
-  Widget _buildRenderer(BuildContext context) {
+  Widget _buildRenderer(BuildContext context, Color backgroundColour) {
     switch (config.type) {
       case TileType.link:
-        return LinkTileRenderer(config: config);
+        return LinkTileRenderer(config: config, backgroundColour: backgroundColour);
       case TileType.text:
         return TextTileRenderer(config: config);
       case TileType.image:
@@ -59,7 +60,7 @@ class SmartBentoTile extends StatelessWidget {
     }
   }
 
-  Widget _buildBackgroundCard(Widget child) {
+  Widget _buildBackgroundCard(Widget child, Color backgroundColour) {
     return BentoInteractionEffect(
       onTap: config.url != null
           ? () => launchUrl(
@@ -70,7 +71,7 @@ class SmartBentoTile extends StatelessWidget {
       child: Card(
         elevation: config.type == TileType.sectionTitle ? 0 : 2,
         clipBehavior: Clip.antiAlias,
-        color: _getBackgroundCardColour(),
+        color: backgroundColour,
         child: InkWell(
           onTap: config.url != null
               ? () => launchUrl(Uri.parse(config.url!))

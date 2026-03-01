@@ -1,7 +1,10 @@
+import 'package:bento_clone/core/theme/theme_cubit.dart';
+import 'package:bento_clone/core/theme/theme_state.dart';
 import 'package:bento_clone/presentation/pages/home_page.dart';
 import 'package:bento_clone/presentation/theme/app_theme.dart';
 import 'package:bento_clone/presentation/widgets/profile_section.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/injector.dart';
 import 'presentation/widgets/tile_section.dart';
@@ -16,13 +19,21 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Initialize GetIt
-    return MaterialApp(
-      title: 'Sid | Product Engineer',
-      theme: AppTheme.light,
-      home: HomePage(
-        profileWidget: ProfileSection(),
-        tileSectionWidget: TileSection(),
+    return BlocProvider(
+      create: (_) => ThemeCubit(),
+      child: BlocBuilder<ThemeCubit, ThemeState>(
+        builder: (context, state) {
+          return MaterialApp(
+            title: 'Sid | Product Engineer',
+            theme: AppTheme.light(state.flavour.light),
+            darkTheme: AppTheme.dark(state.flavour.dark),
+            themeMode: state.mode,
+            home: HomePage(
+              profileWidget: const ProfileSection(),
+              tileSectionWidget: const TileSection(),
+            ),
+          );
+        },
       ),
     );
   }

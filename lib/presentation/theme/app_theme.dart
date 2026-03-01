@@ -16,6 +16,7 @@
 library;
 
 import 'package:bento_clone/core/constants.dart';
+import 'package:bento_clone/core/theme/theme_flavour.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -126,24 +127,40 @@ class AppRadii {
 /// )
 /// ```
 class AppTheme {
-  static ThemeData get light => ThemeData(
-    scaffoldBackgroundColor: AppColors.background,
-    useMaterial3: true,
-    brightness: Brightness.light,
-    textTheme: GoogleFonts.interTextTheme(),
-    cardTheme: CardThemeData(
-      shape: RoundedRectangleBorder(borderRadius: AppRadii.card),
-    ),
-  );
+  AppTheme._();
 
-  /// Stub for future dark mode support.
-  static ThemeData get dark => ThemeData(
-    scaffoldBackgroundColor: Colors.blueGrey,
-    useMaterial3: true,
-    brightness: Brightness.dark,
-    textTheme: GoogleFonts.interTextTheme(),
-    cardTheme: CardThemeData(
-      shape: RoundedRectangleBorder(borderRadius: AppRadii.card),
-    ),
-  );
+  /// Builds a [ThemeData] for the given [variant] and [brightness].
+  static ThemeData _build(ThemeVariant variant, Brightness brightness) {
+    final base = brightness == Brightness.light
+        ? GoogleFonts.interTextTheme()
+        : GoogleFonts.interTextTheme(
+            ThemeData(brightness: Brightness.dark).textTheme,
+          );
+
+    return ThemeData(
+      scaffoldBackgroundColor: variant.background,
+      useMaterial3: true,
+      brightness: brightness,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: variant.accent,
+        brightness: brightness,
+        surface: variant.background,
+      ),
+      textTheme: base.apply(
+        bodyColor: variant.textColour,
+        displayColor: variant.textColour,
+      ),
+      cardTheme: CardThemeData(
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.card),
+      ),
+    );
+  }
+
+  /// Light [ThemeData] built from [variant].
+  static ThemeData light(ThemeVariant variant) =>
+      _build(variant, Brightness.light);
+
+  /// Dark [ThemeData] built from [variant].
+  static ThemeData dark(ThemeVariant variant) =>
+      _build(variant, Brightness.dark);
 }

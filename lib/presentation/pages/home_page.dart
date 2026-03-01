@@ -1,4 +1,5 @@
 import 'package:bento_clone/presentation/utils/app_styles.dart';
+import 'package:bento_clone/presentation/widgets/theme_controls/theme_controls.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -42,6 +43,13 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: buildHomePageWidget(context));
+    return Scaffold(
+      body: Stack(
+        children: [
+          buildHomePageWidget(context),
+          const ThemeControls(),
+        ],
+      ),
+    );
   }
 }

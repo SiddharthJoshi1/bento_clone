@@ -12,8 +12,7 @@ class TextTileRenderer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = _backgroundColour.computeLuminance() < 0.5;
-    final textColor = isDark ? Colors.white : Colors.black;
+    final textColor = _backgroundColour.contrastingTextColour;
 
     if (config.tileSize == TileSize.thin) {
       return Padding(
@@ -58,15 +57,14 @@ class TextTileRenderer extends StatelessWidget {
           Text(
             config.title,
             overflow: TextOverflow.fade,
-            style: _getTextStyle(context, isDark),
+            style: _getTextStyle(context, textColor),
           ),
         ],
       ),
     );
   }
 
-  TextStyle _getTextStyle(BuildContext context, bool isDark) {
-    final textColor = isDark ? Colors.white : Colors.black;
+  TextStyle _getTextStyle(BuildContext context, Color textColor) {
 
     if (Breakpoints.isTablet(context)) {
       return ResponsiveText.titleMedium(context)!.copyWith(
