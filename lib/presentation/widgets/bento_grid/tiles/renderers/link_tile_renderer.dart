@@ -48,6 +48,7 @@ class LinkTileRenderer extends StatelessWidget {
               Expanded(
                 flex: 4,
                 child: Card(
+                    color: backgroundColour,
                   clipBehavior: Clip.hardEdge,
                   margin: TilePadding.imageCard,
                   elevation: 0,
@@ -83,6 +84,7 @@ class LinkTileRenderer extends StatelessWidget {
                 child: Padding(
                   padding: TilePadding.imageCardRow,
                   child: Card(
+                    color: backgroundColour,
                     clipBehavior: Clip.hardEdge,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
