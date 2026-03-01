@@ -1,0 +1,81 @@
+{
+  "profile": {
+    "name": "Sid",
+    "bio": "Product Engineer who builds high-quality, scalable applications. My goal is to create software people will love.",
+    "avatar_path": "assets/Sid Gen.png"
+  },
+  "tiles": [
+    {
+      "type": "section_title",
+      "tile_size": "long_horizontal",
+      "title": "My pattern for building clear, testable, and scalable user journeys."
+    },
+    {
+      "type": "link",
+      "tile_size": "fullsize",
+      "title": "Bubbles: Breaking Down Complex Journeys",
+      "url": "https://github.com/TinyBigLabs/bubbles_example",
+      "image_path": "assets/bubbles.png"
+    },
+    {
+      "type": "section_title",
+      "tile_size": "long_horizontal",
+      "title": "How I work."
+    },
+    {
+      "type": "text",
+      "tile_size": "standard",
+      "title": "I believe the best products are built by teams who communicate with clarity and empathy.",
+      "colour": "#f9aa3a"
+    },
+    {
+      "type": "section_title",
+      "tile_size": "long_horizontal",
+      "title": "Find me here."
+    },
+    {
+      "type": "link",
+      "tile_size": "standard",
+      "title": "Keep up with my work here.",
+      "url": "https://www.linkedin.com/in/siddharth-joshi-/",
+      "image_path": "assets/1635723301936.jpg"
+    },
+    {
+      "type": "link",
+      "tile_size": "small",
+      "title": "Get my CV.",
+      "url": "https://sidjoshi.notion.site/CV-31282118ee9080fe8e51e36781755b9d?pvs=143"
+    },
+    {
+      "type": "section_title",
+      "tile_size": "long_horizontal",
+      "title": "Projects & Writing"
+    },
+    {
+      "type": "link",
+      "tile_size": "fullsize",
+      "title": "Sometimes I write stuff. Come check it out!",
+      "url": "https://www.substack.com/@builtbysid",
+      "image_path": "assets/Sid Gen.png"
+    },
+    {
+      "type": "link",
+      "tile_size": "fullsize",
+      "title": "Check out my Github.",
+      "url": "https://www.github.com/SiddharthJoshi1",
+      "image_path": "assets/untitled_dragon_game.gif"
+    },
+    {
+      "type": "section_title",
+      "tile_size": "long_horizontal",
+      "title": "Fancy working with me?"
+    },
+    {
+      "type": "text",
+      "tile_size": "thin",
+      "title": "Let's Build Something Cool",
+      "url": "mailto:sid@builtbysid.dev",
+      "colour": "#000000"
+    }
+  ]
+}

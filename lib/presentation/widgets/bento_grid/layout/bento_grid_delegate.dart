@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import 'bento_grid_layout.dart';
-import 'utils/layout_utils.dart';
+import 'utils/layout_models.dart';
+import 'utils/skyline_packing.dart';
 
 class BentoGridDelegate extends SliverGridDelegate {
   final List<TileConfig> tiles;
@@ -18,12 +19,11 @@ class BentoGridDelegate extends SliverGridDelegate {
   SliverGridLayout getLayout(SliverConstraints constraints) {
     double columnWidth = LayoutConstants.columnWidth;
 
-    BentoLayoutDetails bentoLayoutDetails =
-        LayoutUtils.buildSkylineAndReturnBentoLayoutDetails(
-          tiles: tiles,
-          columnWidth: columnWidth,
-          isMobile: !Breakpoints.isDesktop(context),
-        );
+    BentoLayoutDetails bentoLayoutDetails = SkylinePacking.pack(
+      tiles: tiles,
+      columnWidth: columnWidth,
+      isMobile: !Breakpoints.isDesktop(context),
+    );
 
     return BentoGridLayout(
       geometryMap: bentoLayoutDetails.geometryMap,

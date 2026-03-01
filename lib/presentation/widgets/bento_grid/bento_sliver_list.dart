@@ -1,9 +1,9 @@
 import 'package:bento_clone/core/responsive/breakpoints.dart';
-import 'package:bento_clone/presentation/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 import '../../../../domain/entities/tile_config.dart';
+import '../profile_section.dart';
 import 'layout/bento_grid_delegate.dart';
-import 'layout/utils/layout_utils.dart';
+import 'layout/utils/mobile_tile_adapter.dart';
 import 'tiles/smart_bento_tile.dart';
 
 class BentoSliverList extends StatelessWidget {
@@ -36,68 +36,29 @@ class BentoSliverList extends StatelessWidget {
         ]
         // --- MOBILE VIEW (List) ---
         else ...[
-          SliverToBoxAdapter(
-            child: CircleAvatar(
-              radius: 100,
-              backgroundColor: Colors.white,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(100),
-                child: Image.asset("assets/Sid Gen.png"),
-              ),
-            ),
-          ),
-
-          SliverToBoxAdapter(child: SizedBox(height: 50)),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Text(
-                "Sid",
-                style: Theme.of(
-                  context,
-                ).textTheme.displaySmall?.copyWith(fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(child: SizedBox(height: 10)),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Text(
-                softWrap: true,
-                "Product Engineer who builds high-quality, scalable applications. My goal is to create software people will love.",
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(child: SizedBox(height: 20)),
-          SliverPadding(
-            padding: EdgeInsets.symmetric(
-              horizontal: Breakpoints.isNarrow(context) ? 0 : 0,
-            ),
-            sliver: SliverList(
-              delegate: SliverChildBuilderDelegate((context, index) {
-                final config = tiles[index];
-
-                // 1. Map the config to a mobile-friendly version
-                final mobileConfig = MobileConfigMapper.getMobileConfig(config);
-
-                // // 2. Get the specific height for this tile type to prevent RenderFlex errors
-                final double height = MobileConfigMapper.getMobileHeight(
-                  mobileConfig.tileSize,
-                  context,
-                );
-
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: SizedBox(
-                    height:
-                        height, // FIX: Constrain height so Spacer() inside the tile works
-                    child: SmartBentoTile(config: mobileConfig),
-                  ),
-                );
-              }, childCount: tiles.length),
-            ),
+          const SliverToBoxAdapter(child: ProfileSection()),
+          const SliverToBoxAdapter(child: SizedBox(height: 20)),
+          SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              final config = tiles[index];
+          
+              // 1. Map the config to a mobile-friendly version
+              final mobileConfig = MobileTileAdapter.getMobileConfig(config);
+          
+              // 2. Get the specific height for this tile type to prevent RenderFlex errors
+              final double height = MobileTileAdapter.getMobileHeight(
+                mobileConfig.tileSize,
+                context,
+              );
+          
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: SizedBox(
+                  height: height,
+                  child: SmartBentoTile(config: mobileConfig),
+                ),
+              );
+            }, childCount: tiles.length),
           ),
         ],
       ],

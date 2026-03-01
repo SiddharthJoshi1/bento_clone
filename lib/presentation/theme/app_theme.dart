@@ -80,6 +80,9 @@ class AppInsets {
   static const double m = 16.0;
   static const double l = 20.0;
   static const double xl = 24.0;
+
+  /// Large panel inset — used for the desktop profile side panel.
+  static const double xxl = 48.0;
 }
 
 // ---------------------------------------------------------------------------
