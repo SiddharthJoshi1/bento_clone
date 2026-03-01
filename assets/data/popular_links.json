@@ -92,7 +92,7 @@
   "github": {
     "link_title": "GitHub",
     "link_icon": "fa-brands fa-github",
-    "brand_colour": "#181717"
+    "brand_colour": "#000000"
   },
   "medium": {
     "link_title": "Medium",
@@ -114,9 +114,14 @@
     "link_icon": "fa-brands fa-threads",
     "brand_colour": "#000000"
   },
+  "substack": {
+    "link_title": "Substack",
+    "link_icon": "fa-brands fa-substack",
+    "brand_colour": "#FF6719"
+  },
   "default": {
     "link_title": "Website",
     "link_icon": "fa-solid fa-link",
-    "brand_colour": "#333333"
+    "brand_colour": "#000000"
   }
 }
