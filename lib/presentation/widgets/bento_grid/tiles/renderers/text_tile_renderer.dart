@@ -14,7 +14,12 @@ class TextTileRenderer extends StatelessWidget {
   Widget build(BuildContext context) {
     final textColor = _backgroundColour.contrastingTextColour;
 
-    if (config.tileSize == TileSize.thin) {
+    // Bar tiles render as a single line with an optional arrow
+    final bool isBar = config.tileSize == TileSize.fullBar ||
+        config.tileSize == TileSize.halfBar ||
+        config.tileSize == TileSize.quarterBar;
+
+    if (isBar) {
       return Padding(
         padding: TilePadding.horizontal,
         child: Row(

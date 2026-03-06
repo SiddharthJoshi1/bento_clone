@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  bento_layout:
+    path: packages/bento_layout
   font_awesome_flutter: ^10.12.0
   get_it: ^9.2.0
   google_fonts: ^8.0.1

@@ -1,12 +1,47 @@
 import 'dart:core';
 
-enum TileSize { small, thin, standard, longHorizontal, longVertical, fullsize }
+/// Tile size vocabulary for the bento grid.
+///
+/// Names encode both dimensions: prefix = width tier, suffix = shape.
+///
+/// Width tiers:
+///   quarter = 0.25 of grid width
+///   half    = 0.50 of grid width
+///   full    = 1.00 of grid width
+///
+/// Shape suffixes:
+///   Bar   = 0.5 units tall  (short, horizontal emphasis)
+///   Card  = 1.0 units tall  (standard card height)
+///   Tower = 2.0 units tall  (tall, vertical emphasis)
+///
+/// | TileSize     | widthFraction | heightSpan | Old name       |
+/// |--------------|---------------|------------|----------------|
+/// | quarterBar   | 0.25          | 0.5        | —  (new)       |
+/// | quarterCard  | 0.25          | 1.0        | small          |
+/// | quarterTower | 0.25          | 2.0        | slim           |
+/// | halfBar      | 0.5           | 0.5        | thin           |
+/// | halfCard     | 0.5           | 1.0        | medium         |
+/// | halfTower    | 0.5           | 2.0        | tall           |
+/// | fullBar      | 1.0           | 0.5        | banner         |
+/// | fullCard     | 1.0           | 1.0        | standard       |
+/// | fullTower    | 1.0           | 2.0        | fullsize       |
+enum TileSize {
+  quarterBar,
+  quarterCard,
+  quarterTower,
+  halfBar,
+  halfCard,
+  halfTower,
+  fullBar,
+  fullCard,
+  fullTower,
+}
 
 enum TileType { sectionTitle, map, link, image, video, text }
 
 class TileConfig {
   final String title;
-  final String? imagePath; // Asset path or Network URL
+  final String? imagePath;
   final String? url;
   final String? colour;
   final TileSize tileSize;
@@ -38,7 +73,7 @@ class TileConfig {
   static TileConfig sectionTitleConfig({required String title}) {
     return TileConfig(
       type: TileType.sectionTitle,
-      tileSize: TileSize.longHorizontal,
+      tileSize: TileSize.fullBar,
       title: title,
     );
   }
@@ -68,22 +103,36 @@ class TileConfig {
       );
 
   static TileSize _sizeFromString(String s) => switch (s) {
-        'small' => TileSize.small,
-        'thin' => TileSize.thin,
-        'standard' => TileSize.standard,
-        'long_horizontal' => TileSize.longHorizontal,
-        'long_vertical' => TileSize.longVertical,
-        'fullsize' => TileSize.fullsize,
-        _ => TileSize.standard,
+        'quarter_bar'    => TileSize.quarterBar,
+        'quarter_card'   => TileSize.quarterCard,
+        'quarter_tower'  => TileSize.quarterTower,
+        'half_bar'       => TileSize.halfBar,
+        'half_card'      => TileSize.halfCard,
+        'half_tower'     => TileSize.halfTower,
+        'full_bar'       => TileSize.fullBar,
+        'full_card'      => TileSize.fullCard,
+        'full_tower'     => TileSize.fullTower,
+        // Legacy keys — kept so old JSON doesn't silently break
+        'small'          => TileSize.quarterCard,
+        'thin'           => TileSize.halfBar,
+        'medium'         => TileSize.halfCard,
+        'standard'       => TileSize.fullCard,
+        'banner'         => TileSize.fullBar,
+        'slim'           => TileSize.quarterTower,
+        'tall'           => TileSize.halfTower,
+        'fullsize'       => TileSize.fullTower,
+        'long_horizontal' => TileSize.fullBar,
+        'long_vertical'   => TileSize.quarterTower,
+        _                => TileSize.halfCard,
       };
 
   static TileType _typeFromString(String s) => switch (s) {
         'section_title' => TileType.sectionTitle,
-        'link' => TileType.link,
-        'text' => TileType.text,
-        'image' => TileType.image,
-        'map' => TileType.map,
-        _ => TileType.text,
+        'link'          => TileType.link,
+        'text'          => TileType.text,
+        'image'         => TileType.image,
+        'map'           => TileType.map,
+        _               => TileType.text,
       };
 
   TileConfig copyWith({

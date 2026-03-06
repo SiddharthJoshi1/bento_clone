@@ -4,7 +4,7 @@ import '../../../../../core/injector.dart';
 import '../../../../../domain/entities/tile_config.dart';
 import '../../../../../domain/repos/link_repo.dart';
 import '../../../../utils/app_styles.dart';
-import '../../../../utils/colour_extension.dart'; // ColourBrightness + ColourConverter
+import '../../../../utils/colour_extension.dart';
 import '../../../../utils/icon_mapping.dart';
 import '../../../../utils/tile_constants.dart';
 import '../../../../utils/url_extension.dart';
@@ -21,34 +21,26 @@ class LinkTileRenderer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TileConfig tileConfig = config;
     final Color textColour = backgroundColour.contrastingTextColour;
 
-    if (!Breakpoints.isDesktop(context) &&
-        config.tileSize == TileSize.fullsize) {
-      tileConfig = config.copyWith(tileSize: TileSize.standard);
-    }
-    if (!Breakpoints.isDesktop(context) &&
-        config.tileSize == TileSize.small) {
-      tileConfig = config.copyWith(tileSize: TileSize.thin);
-    }
-
-    switch (tileConfig.tileSize) {
-      case TileSize.fullsize:
-      case TileSize.longVertical:
+    switch (config.tileSize) {
+      // Tall tiles — icon + title stacked vertically, image below
+      case TileSize.fullTower:
+      case TileSize.halfTower:
+      case TileSize.quarterTower:
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: TilePadding.standard,
-              child: _buildHeader(context, textColour: textColour, showIcon: true),
+              child: _buildHeader(context, textColour: textColour),
             ),
             const Spacer(),
             if (config.imagePath != null)
               Expanded(
                 flex: 4,
                 child: Card(
-                    color: backgroundColour,
+                  color: backgroundColour,
                   clipBehavior: Clip.hardEdge,
                   margin: TilePadding.imageCard,
                   elevation: 0,
@@ -68,14 +60,17 @@ class LinkTileRenderer extends StatelessWidget {
           ],
         );
 
-      case TileSize.standard:
+      // Card tiles — icon + title left, image right
+      case TileSize.fullCard:
+      case TileSize.halfCard:
+      case TileSize.quarterCard:
         return Row(
           children: [
             Expanded(
               flex: 4,
               child: Padding(
                 padding: TilePadding.compact,
-                child: _buildHeader(context, textColour: textColour, showIcon: true),
+                child: _buildHeader(context, textColour: textColour),
               ),
             ),
             if (config.imagePath != null)
@@ -101,19 +96,19 @@ class LinkTileRenderer extends StatelessWidget {
           ],
         );
 
-      case TileSize.small:
-        return Padding(
-          padding: TilePadding.standard,
-          child: _buildHeader(context, textColour: textColour, showIcon: true),
-        );
-
-      case TileSize.thin:
-      case TileSize.longHorizontal:
+      // Bar tiles — icon + title inline, arrow at end
+      case TileSize.fullBar:
+      case TileSize.halfBar:
+      case TileSize.quarterBar:
         return Padding(
           padding: TilePadding.horizontalCompact,
           child: Row(
             children: [
-              _buildHeader(context, textColour: textColour, showIconAndTitleSideBySide: true),
+              _buildHeader(
+                context,
+                textColour: textColour,
+                showIconAndTitleSideBySide: true,
+              ),
               const Spacer(),
               if (config.url != null)
                 Icon(
@@ -130,13 +125,10 @@ class LinkTileRenderer extends StatelessWidget {
   Widget _buildHeader(
     BuildContext context, {
     required Color textColour,
-    bool showIcon = false,
     bool showIconAndTitleSideBySide = false,
   }) {
     final linkEntity = locator<LinkRepository>().getLinkData(config.url ?? "");
     const iconPadding = EdgeInsets.all(AppInsets.s);
-    // URL caption is always subdued — the background is always very light
-    // for link tiles (toSuperLightColour sets lightness to 90%), so grey reads fine.
     final captionColour = textColour.withValues(alpha: 0.55);
 
     if (showIconAndTitleSideBySide) {
@@ -161,9 +153,8 @@ class LinkTileRenderer extends StatelessWidget {
                 config.title,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
-                style: ResponsiveText.labelLarge(
-                  context,
-                )?.copyWith(fontWeight: FontWeight.bold, color: textColour),
+                style: ResponsiveText.labelLarge(context)
+                    ?.copyWith(fontWeight: FontWeight.bold, color: textColour),
               ),
             ],
           ),
@@ -190,34 +181,26 @@ class LinkTileRenderer extends StatelessWidget {
         TileSpacing.small,
         Wrap(
           children: [
-            Breakpoints.isNarrow(context)
-                ? Text(
-                    config.title,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: ResponsiveText.labelSmall(
-                      context,
-                    )?.copyWith(fontWeight: FontWeight.bold, color: textColour),
-                  )
-                : Text(
-                    config.title,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: ResponsiveText.labelMedium(
-                      context,
-                    )?.copyWith(fontWeight: FontWeight.bold, color: textColour),
-                  ),
+            Text(
+              config.title,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: (Breakpoints.isNarrow(context)
+                      ? ResponsiveText.labelSmall(context)
+                      : ResponsiveText.labelMedium(context))
+                  ?.copyWith(fontWeight: FontWeight.bold, color: textColour),
+            ),
           ],
         ),
         if (!Breakpoints.isNarrow(context)) ...[
           TileSpacing.tiny,
           Text(
             config.url?.getBasePath() ?? "",
-            style: ResponsiveText.caption(context)?.copyWith(color: captionColour),
+            style: ResponsiveText.caption(context)
+                ?.copyWith(color: captionColour),
           ),
         ],
       ],
     );
   }
-
 }
