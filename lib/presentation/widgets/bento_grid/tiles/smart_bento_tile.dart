@@ -5,6 +5,7 @@ import '../../../../core/injector.dart';
 import '../../../../domain/entities/tile_config.dart';
 import '../../../../domain/repos/link_repo.dart';
 import '../../../utils/colour_extension.dart';
+import '../../../utils/tile_constants.dart';
 import 'mouse_hover_effect.dart';
 import 'renderers/image_tile_renderer.dart';
 import 'renderers/link_tile_renderer.dart';
@@ -76,7 +77,12 @@ class SmartBentoTile extends StatelessWidget {
           onTap: config.url != null
               ? () => launchUrl(Uri.parse(config.url!))
               : null,
-          child: child,
+          child: Padding(
+            padding: TileType.link == config.type
+                ? TilePadding.tiny
+                : EdgeInsets.zero,
+            child: child,
+          ),
         ),
       ),
     );

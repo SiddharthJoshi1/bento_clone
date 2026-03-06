@@ -31,10 +31,7 @@ class LinkTileRenderer extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: TilePadding.standard,
-              child: _buildHeader(context, textColour: textColour),
-            ),
+            _buildHeader(context, textColour: textColour),
             const Spacer(),
             if (config.imagePath != null)
               Expanded(
@@ -42,7 +39,6 @@ class LinkTileRenderer extends StatelessWidget {
                 child: Card(
                   color: backgroundColour,
                   clipBehavior: Clip.hardEdge,
-                  margin: TilePadding.imageCard,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     side: const BorderSide(color: Colors.black12),
@@ -68,29 +64,24 @@ class LinkTileRenderer extends StatelessWidget {
           children: [
             Expanded(
               flex: 4,
-              child: Padding(
-                padding: TilePadding.compact,
-                child: _buildHeader(context, textColour: textColour),
-              ),
+              child: _buildHeader(context, textColour: textColour),
             ),
             if (config.imagePath != null)
               Expanded(
                 flex: 4,
-                child: Padding(
-                  padding: TilePadding.imageCardRow,
-                  child: Card(
-                    color: backgroundColour,
-                    clipBehavior: Clip.hardEdge,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      side: const BorderSide(color: Colors.black12),
-                      borderRadius: AppRadii.chip,
-                    ),
-                    child: AspectRatio(
-                      aspectRatio: TileImageSizing.squareAspectRatio,
-                      child: Image.asset(config.imagePath!, fit: BoxFit.cover),
-                    ),
+                child: Card(
+                  color: backgroundColour,
+                  clipBehavior: Clip.hardEdge,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(color: Colors.black12),
+                    borderRadius: AppRadii.chip,
                   ),
+                  child:  
+                  Image.asset(
+                    config.imagePath!, fit: BoxFit.cover,
+                    height: double.infinity, width: double.infinity,),
+                  
                 ),
               ),
           ],
@@ -100,24 +91,21 @@ class LinkTileRenderer extends StatelessWidget {
       case TileSize.fullBar:
       case TileSize.halfBar:
       case TileSize.quarterBar:
-        return Padding(
-          padding: TilePadding.horizontalCompact,
-          child: Row(
-            children: [
-              _buildHeader(
-                context,
-                textColour: textColour,
-                showIconAndTitleSideBySide: true,
+        return Row(
+          children: [
+            _buildHeader(
+              context,
+              textColour: textColour,
+              showIconAndTitleSideBySide: true,
+            ),
+            const Spacer(),
+            if (config.url != null)
+              Icon(
+                Icons.arrow_outward,
+                size: AppIconSizes.s,
+                color: textColour,
               ),
-              const Spacer(),
-              if (config.url != null)
-                Icon(
-                  Icons.arrow_outward,
-                  size: AppIconSizes.s,
-                  color: textColour,
-                ),
-            ],
-          ),
+          ],
         );
     }
   }

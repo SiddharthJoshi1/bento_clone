@@ -13,6 +13,8 @@ class TilePadding {
   /// Compact padding for smaller tiles (16px).
   static const EdgeInsets compact = EdgeInsets.all(16.0);
 
+  static const EdgeInsets tiny = EdgeInsets.all(8.0);
+
   /// Horizontal-only padding for thin/bar tiles (24px sides).
   static const EdgeInsets horizontal = EdgeInsets.symmetric(horizontal: 24.0);
 
