@@ -12,9 +12,10 @@ packages:
   bento_layout:
     dependency: "direct main"
     description:
-      path: "packages/bento_layout"
-      relative: true
-    source: path
+      name: bento_layout
+      sha256: "4c4b4f41c3d23a7be3a9f6787dcb77fcb349d5626c57caf5a206e509db8500cb"
+      url: "https://pub.dev"
+    source: hosted
     version: "0.1.0"
   bloc:
     dependency: transitive
