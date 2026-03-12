@@ -4,7 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lukehog_client/lukehog_client.dart';
 
-import '../data/repos/lukehog_analytics_repo.dart';
+
+import '../data/analytics/lukehog_analytics_repo.dart';
 import '../domain/entities/link.dart';
 import '../domain/entities/profile_data.dart';
 import '../domain/entities/tile_config.dart';
