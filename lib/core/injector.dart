@@ -2,13 +2,20 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
+import 'package:lukehog_client/lukehog_client.dart';
 
+import '../data/repos/lukehog_analytics_repo.dart';
 import '../domain/entities/link.dart';
 import '../domain/entities/profile_data.dart';
 import '../domain/entities/tile_config.dart';
+import '../domain/repos/analytics_repo.dart';
 import '../domain/repos/link_repo.dart';
 import '../domain/repos/profile_repo.dart';
 import '../domain/repos/tile_repo.dart';
+import '../domain/usecases/track_error.dart';
+import '../domain/usecases/track_portfolio_opened.dart';
+import '../domain/usecases/track_tile_tapped.dart';
+import 'constants.dart';
 
 final locator = GetIt.instance;
 
@@ -57,5 +64,21 @@ Future<void> setupLocator() async {
   );
   locator.registerLazySingleton<TileRepository>(
     () => TileRepositoryImpl(tiles),
+  );
+
+  // --- Analytics ---
+  locator.registerLazySingleton<AnalyticsRepository>(
+    () => LukehogAnalyticsRepository(
+      LukehogClient(AnalyticsConstants.lukehogAppId),
+    ),
+  );
+  locator.registerLazySingleton<TrackPortfolioOpened>(
+    () => TrackPortfolioOpened(locator<AnalyticsRepository>()),
+  );
+  locator.registerLazySingleton<TrackTileTapped>(
+    () => TrackTileTapped(locator<AnalyticsRepository>()),
+  );
+  locator.registerLazySingleton<TrackError>(
+    () => TrackError(locator<AnalyticsRepository>()),
   );
 }

@@ -26,3 +26,11 @@ class AnimationConstants {
   /// Duration for the tile hover/press scale animation (milliseconds).
   static const int tileScaleDuration = 200;
 }
+
+/// Analytics constants.
+class AnalyticsConstants {
+  /// Lukehog app ID.
+  static const String lukehogAppId = String.fromEnvironment(
+    'LUKEHOG_APP_ID',
+  );
+}
