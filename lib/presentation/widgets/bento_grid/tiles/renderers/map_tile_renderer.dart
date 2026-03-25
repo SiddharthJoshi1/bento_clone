@@ -34,7 +34,7 @@ class MapTileRenderer extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppInsets.s),
             ),
             child: Text(
-              config.title,
+              config.title!,
               style: ResponsiveText.caption(
                 context,
               )?.copyWith(fontWeight: FontWeight.bold, color: AppColors.textPrimary),

@@ -10,67 +10,73 @@ class TextTileRenderer extends StatelessWidget {
 
   const TextTileRenderer({super.key, required this.config});
 
+  Color get _backgroundColour =>
+      config.colour != null ? config.colour!.toColour() : Colors.white;
+
   @override
   Widget build(BuildContext context) {
     final textColor = _backgroundColour.contrastingTextColour;
+    return config.isBar
+        ? _buildBarLayout(context, textColor)
+        : _buildCardLayout(context, textColor);
+  }
 
-    // Bar tiles render as a single line with an optional arrow
-    final bool isBar = config.tileSize == TileSize.fullBar ||
-        config.tileSize == TileSize.halfBar ||
-        config.tileSize == TileSize.quarterBar;
-
-    if (isBar) {
-      return Padding(
-        padding: TilePadding.horizontal,
-        child: Row(
-          children: [
-            Text(
-              config.title,
-              overflow: TextOverflow.ellipsis,
-              style: ResponsiveText.caption(
-                context,
-              )?.copyWith(fontWeight: FontWeight.w600, color: textColor),
-            ),
-            const Spacer(),
-            if (config.url != null)
-              Icon(
-                Icons.arrow_outward_sharp,
-                size: AppIconSizes.s,
-                color: textColor,
+  // Bar tiles — single line title with optional arrow
+  Widget _buildBarLayout(BuildContext context, Color textColor) {
+    return Padding(
+      padding: TilePadding.horizontal,
+      child: Row(
+        children: [
+          if (config.title != null && config.title!.isNotEmpty)
+            Expanded(
+              child: Text(
+                config.title!,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: ResponsiveText.caption(
+                  context,
+                )?.copyWith(fontWeight: FontWeight.w600, color: textColor),
               ),
-          ],
-        ),
-      );
-    }
+            ),
+          if (config.url != null)
+            Icon(
+              Icons.arrow_outward_sharp,
+              size: AppIconSizes.s,
+              color: textColor,
+            ),
+        ],
+      ),
+    );
+  }
 
+  // Card/tower tiles — decorative icon at top, italic body text at bottom
+  Widget _buildCardLayout(BuildContext context, Color textColor) {
     return Padding(
       padding: TilePadding.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Icon(
-                Icons.bubble_chart_outlined,
-                size: AppIconSizes.l,
-                color: textColor,
+          Icon(
+            Icons.bubble_chart_outlined,
+            size: AppIconSizes.l,
+            color: textColor,
+          ),
+          if (config.title != null && config.title!.isNotEmpty)
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: Text(
+                  config.title!,
+                  style: _getTextStyle(context, textColor),
+                ),
               ),
-            ],
-          ),
-          const Spacer(),
-          Text(
-            config.title,
-            overflow: TextOverflow.fade,
-            style: _getTextStyle(context, textColor),
-          ),
+            ),
         ],
       ),
     );
   }
 
   TextStyle _getTextStyle(BuildContext context, Color textColor) {
-
     if (Breakpoints.isTablet(context)) {
       return ResponsiveText.titleMedium(context)!.copyWith(
         fontStyle: FontStyle.italic,
@@ -82,11 +88,8 @@ class TextTileRenderer extends StatelessWidget {
         fontStyle: FontStyle.italic,
         fontWeight: FontWeight.w600,
         color: textColor,
-        overflow: TextOverflow.ellipsis,
+        overflow: TextOverflow.fade,
       );
     }
   }
-
-  Color get _backgroundColour =>
-      config.colour != null ? config.colour!.toColour() : Colors.white;
 }

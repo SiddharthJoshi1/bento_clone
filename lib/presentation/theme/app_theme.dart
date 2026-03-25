@@ -55,10 +55,10 @@ class AppColors {
 
   // -- Tile overlays --
   /// Bottom gradient start (transparent) for image tiles.
-  static const Color imageGradientStart = Colors.transparent;
+  static final Color imageGradientStart = Colors.transparent;
 
   /// Bottom gradient end (dark) for image tiles.
-  static final Color imageGradientEnd = Colors.black.withValues(alpha: 0.6);
+  static final Color imageGradientEnd = Colors.black.withValues(alpha: 0.8);
 
   // -- Map tile placeholder --
   static final Color mapBackground = Colors.blue[100]!;

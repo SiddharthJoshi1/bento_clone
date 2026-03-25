@@ -40,7 +40,7 @@ enum TileSize {
 enum TileType { sectionTitle, map, link, image, video, text }
 
 class TileConfig {
-  final String title;
+  final String? title;
   final String? imagePath;
   final String? url;
   final String? colour;
@@ -56,47 +56,11 @@ class TileConfig {
     this.url,
   });
 
-  static TileConfig linkTileConfig({
-    required String url,
-    String? imagePath,
-    required TileSize tileSize,
-    required String title,
-  }) {
-    return TileConfig(
-      type: TileType.link,
-      tileSize: tileSize,
-      title: title,
-      url: url,
-    );
-  }
-
-  static TileConfig sectionTitleConfig({required String title}) {
-    return TileConfig(
-      type: TileType.sectionTitle,
-      tileSize: TileSize.fullBar,
-      title: title,
-    );
-  }
-
-  static TileConfig textTileConfig({
-    required String title,
-    String? colour,
-    String? url,
-    required TileSize tileSize,
-  }) {
-    return TileConfig(
-      type: TileType.text,
-      tileSize: tileSize,
-      title: title,
-      url: url,
-      colour: colour,
-    );
-  }
 
   factory TileConfig.fromJson(Map<String, dynamic> json) => TileConfig(
         type: _typeFromString(json['type'] as String),
         tileSize: _sizeFromString(json['tile_size'] as String),
-        title: json['title'] as String,
+        title: json['title'] as String?,
         url: json['url'] as String?,
         imagePath: json['image_path'] as String?,
         colour: json['colour'] as String?,
@@ -134,6 +98,18 @@ class TileConfig {
         'map'           => TileType.map,
         _               => TileType.text,
       };
+
+  /// Whether this tile uses a bar-shaped size (half-height horizontal strip).
+  bool get isBar =>
+      tileSize == TileSize.fullBar ||
+      tileSize == TileSize.halfBar ||
+      tileSize == TileSize.quarterBar;
+
+  /// Whether this tile uses a tower-shaped size (tall, vertical emphasis).
+  bool get isTower =>
+      tileSize == TileSize.fullTower ||
+      tileSize == TileSize.halfTower ||
+      tileSize == TileSize.quarterTower;
 
   TileConfig copyWith({
     String? title,

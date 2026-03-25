@@ -10,17 +10,32 @@ class ImageTileRenderer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (config.imagePath == null) return const SizedBox.shrink();
+
+    final image = Image.asset(
+      config.imagePath!,
+      fit: BoxFit.cover,
+      height: double.infinity,
+      width: double.infinity,
+    );
+
+    // No title — pure image, no overlay
+    if (config.title == null || config.title!.isEmpty) return image;
+
+    // Title present — subtle gradient scrim for legibility
     return Stack(
       fit: StackFit.expand,
       children: [
-        if (config.imagePath != null)
-          Image.asset(config.imagePath!, fit: BoxFit.cover),
+        image,
         Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [AppColors.imageGradientStart, AppColors.imageGradientEnd],
+              colors: [
+                Colors.transparent,
+                Colors.black.withValues(alpha: 0.35),
+              ],
             ),
           ),
         ),
@@ -29,10 +44,11 @@ class ImageTileRenderer extends StatelessWidget {
           left: AppInsets.m,
           right: AppInsets.m,
           child: Text(
-            config.title,
-            style: ResponsiveText.titleSmall(
-              context,
-            )?.copyWith(color: AppColors.textOnDark, fontWeight: FontWeight.bold),
+            config.title!,
+            style: ResponsiveText.titleSmall(context)?.copyWith(
+              color: AppColors.textOnDark,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ],

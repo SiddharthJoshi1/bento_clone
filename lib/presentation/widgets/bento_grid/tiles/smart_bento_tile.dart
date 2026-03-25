@@ -68,7 +68,7 @@ class SmartBentoTile extends StatelessWidget {
     return BentoInteractionEffect(
       onTap: hasTap
           ? () {
-              locator<TrackTileTapped>().call(config.title);
+              locator<TrackTileTapped>().call(config.title ?? '');
               launchUrl(
                 Uri.parse(config.url!),
                 mode: LaunchMode.externalApplication,

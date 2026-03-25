@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/injector.dart';
+import '../../../../../domain/entities/link.dart';
 import '../../../../../domain/entities/tile_config.dart';
 import '../../../../../domain/repos/link_repo.dart';
 import '../../../../utils/app_styles.dart';
@@ -23,129 +24,84 @@ class LinkTileRenderer extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color textColour = backgroundColour.contrastingTextColour;
 
-    switch (config.tileSize) {
-      // Tall tiles — icon + title stacked vertically, image below
-      case TileSize.fullTower:
-      case TileSize.halfTower:
-      case TileSize.quarterTower:
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildHeader(context, textColour: textColour),
-            const Spacer(),
-            if (config.imagePath != null)
-              Expanded(
-                flex: 4,
-                child: Card(
-                  color: backgroundColour,
-                  clipBehavior: Clip.hardEdge,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    side: const BorderSide(color: Colors.black12),
-                    borderRadius: AppRadii.card,
-                  ),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: AspectRatio(
-                      aspectRatio: TileImageSizing.squareAspectRatio,
-                      child: Image.asset(config.imagePath!, fit: BoxFit.cover),
-                    ),
-                  ),
-                ),
-              ),
-          ],
-        );
+    if (config.isTower) return _buildTowerLayout(context, textColour);
+    if (config.isBar) return _buildBarLayout(context, textColour);
+    return _buildCardLayout(context, textColour);
+  }
 
-      // Card tiles — icon + title left, image right
-      case TileSize.fullCard:
-      case TileSize.halfCard:
-      case TileSize.quarterCard:
-        return Row(
-          children: [
-            Expanded(
-              flex: 4,
-              child: _buildHeader(context, textColour: textColour),
-            ),
-            if (config.imagePath != null)
-              Expanded(
-                flex: 4,
-                child: Card(
-                  color: backgroundColour,
-                  clipBehavior: Clip.hardEdge,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    side: const BorderSide(color: Colors.black12),
-                    borderRadius: AppRadii.chip,
-                  ),
-                  child:  
-                  Image.asset(
-                    config.imagePath!, fit: BoxFit.cover,
-                    height: double.infinity, width: double.infinity,),
-                  
-                ),
-              ),
-          ],
-        );
+  // Tall tiles — icon + title stacked vertically, image below
+  Widget _buildTowerLayout(BuildContext context, Color textColour) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildHeader(context, textColour: textColour),
+        const Spacer(),
+        if (config.imagePath != null)
+          Expanded(
+            flex: 4,
+            child: _buildImageCard(backgroundColour, AppRadii.card),
+          ),
+      ],
+    );
+  }
 
-      // Bar tiles — icon + title inline, arrow at end
-      case TileSize.fullBar:
-      case TileSize.halfBar:
-      case TileSize.quarterBar:
-        return Row(
-          children: [
-            _buildHeader(
-              context,
-              textColour: textColour,
-              showIconAndTitleSideBySide: true,
-            ),
-            const Spacer(),
-            if (config.url != null)
-              Icon(
-                Icons.arrow_outward,
-                size: AppIconSizes.s,
-                color: textColour,
-              ),
-          ],
-        );
-    }
+  // Card tiles — icon + title left, image right
+  Widget _buildCardLayout(BuildContext context, Color textColour) {
+    return Row(
+      children: [
+        Expanded(flex: 4, child: _buildHeader(context, textColour: textColour)),
+        if (config.imagePath != null)
+          Expanded(
+            flex: 4,
+            child: _buildImageCard(backgroundColour, AppRadii.chip),
+          ),
+      ],
+    );
+  }
+
+  // Bar tiles — icon + title inline, arrow at end
+  Widget _buildBarLayout(BuildContext context, Color textColour) {
+    return Row(
+      children: [
+        Expanded(
+          child: _buildHeader(
+            context,
+            textColour: textColour,
+            sideBySide: true,
+          ),
+        ),
+        if (config.url != null)
+          Icon(Icons.arrow_outward, size: AppIconSizes.s, color: textColour),
+      ],
+    );
   }
 
   Widget _buildHeader(
     BuildContext context, {
     required Color textColour,
-    bool showIconAndTitleSideBySide = false,
+    bool sideBySide = false,
   }) {
-    final linkEntity = locator<LinkRepository>().getLinkData(config.url ?? "");
-    const iconPadding = EdgeInsets.all(AppInsets.s);
+    final linkEntity = locator<LinkRepository>().getLinkData(config.url ?? '');
     final captionColour = textColour.withValues(alpha: 0.55);
+    final iconCard = _buildIconCard(linkEntity);
 
-    if (showIconAndTitleSideBySide) {
+    if (sideBySide) {
       return Row(
         children: [
-          Card(
-            shape: RoundedRectangleBorder(borderRadius: AppRadii.chip),
-            color: Colors.white,
-            child: Padding(
-              padding: iconPadding,
-              child: Icon(
-                LinkIconMapping.getIcon(linkEntity.linkIcon),
-                color: linkEntity.brandColour.toColour(),
-                size: AppIconSizes.m,
+          iconCard,
+          TileSpacing.horizontalSmall,
+          if (config.title != null && config.title!.isNotEmpty)
+            Expanded(
+              child: Text(
+                config.title!,
+                maxLines: 1,
+                style: ResponsiveText.labelLarge(context)?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: textColour,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
-          ),
-          TileSpacing.horizontalSmall,
-          Wrap(
-            children: [
-              Text(
-                config.title,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style: ResponsiveText.labelLarge(context)
-                    ?.copyWith(fontWeight: FontWeight.bold, color: textColour),
-              ),
-            ],
-          ),
         ],
       );
     }
@@ -154,41 +110,66 @@ class LinkTileRenderer extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Card(
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.chip),
-          color: Colors.white,
-          child: Padding(
-            padding: iconPadding,
-            child: Icon(
-              LinkIconMapping.getIcon(linkEntity.linkIcon),
-              color: linkEntity.brandColour.toColour(),
-              size: AppIconSizes.m,
-            ),
-          ),
-        ),
+        iconCard,
         TileSpacing.small,
-        Wrap(
-          children: [
-            Text(
-              config.title,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              style: (Breakpoints.isNarrow(context)
-                      ? ResponsiveText.labelSmall(context)
-                      : ResponsiveText.labelMedium(context))
-                  ?.copyWith(fontWeight: FontWeight.bold, color: textColour),
-            ),
-          ],
-        ),
+        if (config.title != null && config.title!.isNotEmpty)
+          Text(
+            config.title!,
+            maxLines: 2,
+            style:
+                (Breakpoints.isNarrow(context)
+                        ? ResponsiveText.labelSmall(context)
+                        : ResponsiveText.labelMedium(context))
+                    ?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: textColour,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+          ),
+
         if (!Breakpoints.isNarrow(context)) ...[
           TileSpacing.tiny,
           Text(
             config.url?.getBasePath() ?? "",
-            style: ResponsiveText.caption(context)
-                ?.copyWith(color: captionColour),
+            style: ResponsiveText.caption(
+              context,
+            )?.copyWith(color: captionColour),
           ),
         ],
       ],
+    );
+  }
+
+  Widget _buildIconCard(LinkConfig linkEntity) {
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: AppRadii.chip),
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(AppInsets.s),
+        child: Icon(
+          LinkIconMapping.getIcon(linkEntity.linkIcon),
+          color: linkEntity.brandColour.toColour(),
+          size: AppIconSizes.m,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildImageCard(Color colour, BorderRadius radius) {
+    return Card(
+      color: colour,
+      clipBehavior: Clip.hardEdge,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(color: Colors.black12),
+        borderRadius: radius,
+      ),
+      child: Image.asset(
+        config.imagePath!,
+        fit: BoxFit.cover,
+        height: double.infinity,
+        width: double.infinity,
+      ),
     );
   }
 }
