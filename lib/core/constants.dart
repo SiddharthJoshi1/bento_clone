@@ -27,6 +27,24 @@ class AnimationConstants {
   static const int tileScaleDuration = 200;
 }
 
+/// Map tile constants.
+class MapConstants {
+  /// Raster tile URL template for the map tile renderer.
+  /// Swap this to change the map style — no other code changes needed.
+  ///
+  /// Current: OSM Standard (free, open, attribution required).
+  /// Alternative: Maptiler — 'https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=YOUR_KEY'
+  static const String tileUrlTemplate =
+      'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+
+  /// User-agent package name sent with tile requests.
+  /// OSM policy requires a clear, unique identifier — do not change to a generic value.
+  static const String userAgentPackageName = 'dev.builtbysid.bento_clone';
+
+  /// Default zoom level for map tiles.
+  static const double defaultZoom = 14.0;
+}
+
 /// Analytics constants.
 class AnalyticsConstants {
   /// Lukehog app ID.

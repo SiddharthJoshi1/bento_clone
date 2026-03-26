@@ -65,6 +65,13 @@
       "url": "https://www.github.com/SiddharthJoshi1",
       "image_path": "assets/untitled_dragon_game.gif"
     },
+        {
+      "type": "map",
+      "tile_size": "full_card",
+      "title": "Based in the UK",
+      "latitude": 51.50955119018524,
+      "longitude": -0.12741695598862016
+    },
     {
       "type": "section_title",
       "tile_size": "full_bar",

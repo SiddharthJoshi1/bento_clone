@@ -46,6 +46,8 @@ class TileConfig {
   final String? colour;
   final TileSize tileSize;
   final TileType type;
+  final double? latitude;
+  final double? longitude;
 
   TileConfig({
     required this.type,
@@ -54,6 +56,8 @@ class TileConfig {
     this.colour,
     this.imagePath,
     this.url,
+    this.latitude,
+    this.longitude,
   });
 
 
@@ -64,6 +68,8 @@ class TileConfig {
         url: json['url'] as String?,
         imagePath: json['image_path'] as String?,
         colour: json['colour'] as String?,
+        latitude: (json['latitude'] as num?)?.toDouble(),
+        longitude: (json['longitude'] as num?)?.toDouble(),
       );
 
   static TileSize _sizeFromString(String s) => switch (s) {
@@ -118,6 +124,8 @@ class TileConfig {
     String? colour,
     TileSize? tileSize,
     TileType? type,
+    double? latitude,
+    double? longitude,
   }) {
     return TileConfig(
       type: type ?? this.type,
@@ -126,6 +134,8 @@ class TileConfig {
       imagePath: imagePath ?? this.imagePath,
       url: url ?? this.url,
       colour: colour ?? this.colour,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
     );
   }
 }
