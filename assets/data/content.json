@@ -36,7 +36,7 @@
     },
     {
       "type": "map",
-      "tile_size": "quarter_card",
+      "tile_size": "half_card",
       "title": "Based in the UK",
       "latitude": 51.50955119018524,
       "longitude": -0.12741695598862016
