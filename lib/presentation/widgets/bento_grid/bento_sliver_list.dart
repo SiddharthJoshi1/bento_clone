@@ -1,5 +1,7 @@
+import 'package:bento_clone/domain/entities/profile_data.dart';
 import 'package:bento_layout/bento_layout.dart';
 import 'package:flutter/material.dart';
+
 
 import '../../../../core/constants.dart';
 import '../../../../domain/entities/tile_config.dart';
@@ -11,8 +13,9 @@ import 'tiles/smart_bento_tile.dart';
 
 class BentoSliverList extends StatelessWidget {
   final List<TileConfig> tiles;
+  final ProfileData profileData;
 
-  const BentoSliverList({super.key, required this.tiles});
+  const BentoSliverList({super.key, required this.tiles, required this.profileData});
 
   @override
   Widget build(BuildContext context) {
@@ -36,33 +39,35 @@ class BentoSliverList extends StatelessWidget {
         )
         .toList();
 
-    return CustomScrollView(
-      slivers: [
-        const SliverToBoxAdapter(child: SizedBox(height: 20)),
-
-        // Profile header — mobile only, desktop uses the side panel
-        if (isMobile) ...[
-          const SliverToBoxAdapter(child: ProfileSection()),
+    return Center(
+      child: CustomScrollView(
+        slivers: [
           const SliverToBoxAdapter(child: SizedBox(height: 20)),
-        ],
-
-        // Bento grid via the package delegate
-        SliverPadding(
-          padding: isMobile
-              ? EdgeInsets.zero
-              : const EdgeInsets.symmetric(horizontal: 20),
-          sliver: SliverGrid(
-            gridDelegate: BentoGridDelegate(
-              items: items,
-              unitHeight: LayoutConstants.unitHeight,
-            ),
-            delegate: SliverChildBuilderDelegate(
-              (context, index) => items[index].child,
-              childCount: items.length,
+      
+          // Profile header — mobile only, desktop uses the side panel
+          if (isMobile) ...[
+             SliverToBoxAdapter(child: ProfileSection(profile: profileData)),
+            const SliverToBoxAdapter(child: SizedBox(height: 20)),
+          ],
+      
+          // Bento grid via the package delegate
+          SliverPadding(
+            padding: isMobile
+                ? EdgeInsets.zero
+                : const EdgeInsets.symmetric(horizontal: 20),
+            sliver: SliverGrid(
+              gridDelegate: BentoGridDelegate(
+                items: items,
+                unitHeight: LayoutConstants.unitHeight,
+              ),
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => items[index].child,
+                childCount: items.length,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 import '../../../../../core/injector.dart';
@@ -8,6 +9,7 @@ import '../../../../utils/app_styles.dart';
 import '../../../../utils/colour_extension.dart';
 import '../../../../utils/icon_mapping.dart';
 import '../../../../utils/tile_constants.dart';
+import '../../../../utils/tile_image.dart';
 import '../../../../utils/url_extension.dart';
 
 class LinkTileRenderer extends StatelessWidget {
@@ -164,12 +166,7 @@ class LinkTileRenderer extends StatelessWidget {
         side: const BorderSide(color: Colors.black12),
         borderRadius: radius,
       ),
-      child: Image.asset(
-        config.imagePath!,
-        fit: BoxFit.cover,
-        height: double.infinity,
-        width: double.infinity,
-      ),
+      child: TileImage(path: config.imagePath!),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../domain/entities/tile_config.dart';
 import '../../../../utils/app_styles.dart';
+import '../../../../utils/tile_image.dart';
 
 class ImageTileRenderer extends StatelessWidget {
   final TileConfig config;
@@ -12,12 +13,7 @@ class ImageTileRenderer extends StatelessWidget {
   Widget build(BuildContext context) {
     if (config.imagePath == null) return const SizedBox.shrink();
 
-    final image = Image.asset(
-      config.imagePath!,
-      fit: BoxFit.cover,
-      height: double.infinity,
-      width: double.infinity,
-    );
+    final image = TileImage(path: config.imagePath!);
 
     // No title — pure image, no overlay
     if (config.title == null || config.title!.isEmpty) return image;

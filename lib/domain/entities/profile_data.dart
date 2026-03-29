@@ -21,4 +21,11 @@ class ProfileData {
         bio: json['bio'] as String,
         avatarPath: json['avatar_path'] as String,
       );
+
+  /// Empty stub used before [PortfolioBloc] has loaded real content.
+  factory ProfileData.empty() => const ProfileData(
+        name: '',
+        bio: '',
+        avatarPath: '',
+      );
 }
