@@ -1,5 +1,5 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.2",
   "profile": {
     "name": "Sid",
     "bio": "Product Engineer who builds high-quality, scalable applications. My goal is to create software people will love.",
@@ -57,7 +57,7 @@
     {
       "type": "section_title",
       "tile_size": "full_bar",
-      "title": "Projects & Writing"
+      "title": "Projects & Writings"
     },
     {
       "type": "link",
