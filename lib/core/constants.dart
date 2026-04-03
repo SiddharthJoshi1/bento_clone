@@ -49,8 +49,11 @@ class MapConstants {
 class RemoteConstants {
   /// Raw GitHub URL serving content.json from the `content` branch.
   /// Push to that branch to update the live portfolio — no rebuild needed.
-  static const String contentJsonUrl =
-      'https://raw.githubusercontent.com/SiddharthJoshi1/bento_clone/content/assets/data/content.json';
+  static const String baseContentUrl = "https://raw.githubusercontent.com/SiddharthJoshi1/bento_clone/content/"; 
+
+  static const String contentJsonUrlPath = 
+      '${baseContentUrl}assets/data/content.json';
+  
 
   /// SharedPreferences key for the cached content JSON string.
   static const String contentCacheKey = 'cached_content_json';

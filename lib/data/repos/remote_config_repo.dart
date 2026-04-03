@@ -19,8 +19,8 @@ class RemoteConfigRepository {
   RemoteConfigRepository({
     required RemoteJsonSource remoteSource,
     required CacheManager cacheManager,
-  })  : _remote = remoteSource,
-        _cache = cacheManager;
+  }) : _remote = remoteSource,
+       _cache = cacheManager;
 
   final RemoteJsonSource _remote;
   final CacheManager _cache;
@@ -44,8 +44,9 @@ class RemoteConfigRepository {
         );
         contentJson = remoteJson;
       }
-    } catch (_) {
+    } catch (err) {
       // Remote fetch failed — continue with cached/bundled content.
+      print('Remote fetch failed, using cached content: $err');
     }
 
     // --- Step 3: parse and return ---
@@ -53,7 +54,7 @@ class RemoteConfigRepository {
       contentJson['profile'] as Map<String, dynamic>,
     );
 
-    final tiles = (contentJson['tiles'] as List<dynamic>)
+    List<TileConfig> tiles = (contentJson['tiles'] as List<dynamic>)
         .map((e) => TileConfig.fromJson(e as Map<String, dynamic>))
         .toList();
 

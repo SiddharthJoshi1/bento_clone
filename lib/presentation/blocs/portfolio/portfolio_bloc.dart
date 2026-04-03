@@ -1,6 +1,9 @@
+import 'package:bento_clone/domain/entities/portfolio_content.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/constants.dart';
 import '../../../data/repos/remote_config_repo.dart';
+import '../../../domain/entities/tile_config.dart';
 import 'portfolio_event.dart';
 import 'portfolio_state.dart';
 
@@ -30,9 +33,21 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
     emit(const PortfolioLoading());
     try {
       final content = await _repo.load();
+      convertTileAssetPathToNetworkPath(content);
       emit(PortfolioLoaded(content));
     } catch (e) {
       emit(PortfolioError(e.toString()));
+    }
+  }
+
+  void convertTileAssetPathToNetworkPath(PortfolioContent content) {
+    for (int i = 0; i < content.tiles.length; i++) {
+      TileConfig tileAtIndex = content.tiles[i];
+      if (tileAtIndex.imagePath != null) {
+        content.tiles[i] = tileAtIndex.copyWith(
+          imagePath: RemoteConstants.baseContentUrl + tileAtIndex.imagePath!,
+        );
+      }
     }
   }
 }
