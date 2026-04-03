@@ -26,7 +26,7 @@ class RemoteJsonSource {
   Future<Map<String, dynamic>> fetchContentJson() async {
     try {
       final response = await _client
-          .get(Uri.parse(RemoteConstants.contentJsonUrl))
+          .get(Uri.parse(RemoteConstants.contentJsonUrlPath))
           .timeout(
             RemoteConstants.fetchTimeout,
           );
