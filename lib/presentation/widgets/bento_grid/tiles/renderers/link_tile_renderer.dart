@@ -5,12 +5,12 @@ import '../../../../../core/injector.dart';
 import '../../../../../domain/entities/link.dart';
 import '../../../../../domain/entities/tile_config.dart';
 import '../../../../../domain/repos/link_repo.dart';
+import '../../../../extensions/colour_extension.dart';
+import '../../../../extensions/url_extension.dart';
 import '../../../../utils/app_styles.dart';
-import '../../../../utils/colour_extension.dart';
 import '../../../../utils/icon_mapping.dart';
 import '../../../../utils/tile_constants.dart';
 import '../../../../utils/tile_image.dart';
-import '../../../../utils/url_extension.dart';
 
 class LinkTileRenderer extends StatelessWidget {
   final TileConfig config;

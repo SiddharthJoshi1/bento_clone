@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../theme/app_theme.dart';
+import '../../../core/theme/app_theme.dart';
 
 /// Full-screen error state — a faded 4×4 bento grid with a sad face overlay.
 class BentoErrorScreen extends StatelessWidget {

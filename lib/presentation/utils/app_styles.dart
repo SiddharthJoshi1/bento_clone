@@ -11,6 +11,6 @@ library;
 export 'package:bento_clone/core/responsive/breakpoints.dart'
     show Breakpoints, ResponsiveBuilder, ResponsiveText;
 
-export 'package:bento_clone/presentation/theme/app_theme.dart'
+export 'package:bento_clone/core/theme/app_theme.dart'
     show AppInsets, AppIconSizes, AppRadii, AppColors, AppTheme;
 

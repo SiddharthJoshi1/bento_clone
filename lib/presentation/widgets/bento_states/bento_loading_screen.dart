@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../theme/app_theme.dart';
+import '../../../core/theme/app_theme.dart';
+
 
 /// Full-screen loading state — a 4×4 bento grid pulsing in a staggered wave.
 ///

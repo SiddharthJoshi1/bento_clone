@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
+part of 'theme_cubit.dart';
 
-import 'theme_flavour.dart';
 
 /// Immutable state for [ThemeCubit].
 class ThemeState {

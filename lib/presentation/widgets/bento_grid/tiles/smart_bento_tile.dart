@@ -3,9 +3,9 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/injector.dart';
 import '../../../../domain/entities/tile_config.dart';
+import '../../../../domain/repos/analytics_repo.dart';
 import '../../../../domain/repos/link_repo.dart';
-import '../../../../domain/usecases/track_tile_tapped.dart';
-import '../../../utils/colour_extension.dart';
+import '../../../extensions/colour_extension.dart';
 import '../../../utils/tile_constants.dart';
 import 'mouse_hover_effect.dart';
 import 'renderers/image_tile_renderer.dart';
@@ -27,7 +27,6 @@ class SmartBentoTile extends StatelessWidget {
     return _buildBackgroundCard(_buildRenderer(context, backgroundColour), backgroundColour);
   }
 
-  /// Delegates to the correct renderer based on tile type.
   Widget _buildRenderer(BuildContext context, Color backgroundColour) {
     switch (config.type) {
       case TileType.link:
@@ -68,7 +67,7 @@ class SmartBentoTile extends StatelessWidget {
     return BentoInteractionEffect(
       onTap: hasTap
           ? () {
-              locator<TrackTileTapped>().call(config.title ?? '');
+              _trackTileTapped(config.title ?? '');
               launchUrl(
                 Uri.parse(config.url!),
                 mode: LaunchMode.externalApplication,
@@ -80,7 +79,7 @@ class SmartBentoTile extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         color: backgroundColour,
         child: InkWell(
-          onTap: null, // tap handled exclusively by BentoInteractionEffect above
+          onTap: null,
           child: Padding(
             padding: TileType.link == config.type
                 ? TilePadding.tiny
@@ -90,5 +89,16 @@ class SmartBentoTile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  /// Slugifies [tileTitle] and fires the analytics event directly on
+  /// [AnalyticsRepository], bypassing the now-deleted use case layer.
+  void _trackTileTapped(String tileTitle) {
+    final slug = tileTitle
+        .toLowerCase()
+        .replaceAll(RegExp(r'[^a-z0-9\s]'), '')
+        .trim()
+        .replaceAll(RegExp(r'\s+'), '_');
+    locator<AnalyticsRepository>().trackTileTapped('tile_tapped_$slug');
   }
 }

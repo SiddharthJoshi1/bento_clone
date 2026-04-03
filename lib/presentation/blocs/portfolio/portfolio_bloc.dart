@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../data/repos/remote_config_repo.dart';
+import '../../../data/repos/remote_config_repo.dart';
 import 'portfolio_event.dart';
 import 'portfolio_state.dart';
 

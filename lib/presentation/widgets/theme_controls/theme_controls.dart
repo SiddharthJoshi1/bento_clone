@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/theme/theme_cubit.dart';
-import '../../../core/theme/theme_state.dart';
+import '../../blocs/theme/theme_cubit.dart';
 import 'control_pill.dart';
 import 'theme_panel.dart';
 
@@ -68,7 +67,7 @@ class _ThemeControlsState extends State<ThemeControls>
         final cubit = context.read<ThemeCubit>();
 
         return SafeArea(
-          minimum:  EdgeInsets.all(16),
+          minimum: const EdgeInsets.all(16),
           child: Align(
             alignment: Alignment.topRight,
             child: Column(

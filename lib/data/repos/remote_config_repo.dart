@@ -1,19 +1,9 @@
 import '../../core/network/cache_manager.dart';
 import '../../core/network/remote_json_source.dart';
 import '../../core/constants.dart';
+import '../../domain/entities/portfolio_content.dart';
 import '../../domain/entities/profile_data.dart';
 import '../../domain/entities/tile_config.dart';
-
-/// The resolved portfolio content returned by [RemoteConfigRepository].
-class PortfolioContent {
-  const PortfolioContent({
-    required this.tiles,
-    required this.profile,
-  });
-
-  final List<TileConfig> tiles;
-  final ProfileData profile;
-}
 
 /// Orchestrates remote fetching and caching of portfolio content.
 ///
