@@ -7,16 +7,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/analytics/lukehog_analytics_repo.dart';
 import '../data/repos/remote_config_repo.dart';
-import '../presentation/blocs/portfolio_bloc.dart';
+import '../presentation/blocs/portfolio/portfolio_bloc.dart';
 import '../domain/entities/link.dart';
-import '../domain/entities/profile_data.dart';
 import '../domain/repos/analytics_repo.dart';
 import '../domain/repos/link_repo.dart';
-import '../domain/repos/profile_repo.dart';
-import '../domain/repos/tile_repo.dart';
-import '../domain/usecases/track_error.dart';
-import '../domain/usecases/track_portfolio_opened.dart';
-import '../domain/usecases/track_tile_tapped.dart';
 import 'constants.dart';
 import 'network/cache_manager.dart';
 import 'network/remote_json_source.dart';
@@ -25,16 +19,16 @@ final locator = GetIt.instance;
 
 /// Loads and registers all dependencies. Must be awaited before [runApp].
 ///
-/// Reads two asset files concurrently:
+/// Reads one asset file at startup:
 ///   - `assets/data/popular_links.json` → [LinkRepository]
-///   - `assets/data/content.json`       → [ProfileRepository] + [TileRepository]
 ///
-/// All repository [get] methods remain synchronous after startup.
+/// Portfolio content (tiles + profile) is fetched remotely by [PortfolioBloc]
+/// via [RemoteConfigRepository] — not loaded from bundle here.
 Future<void> setupLocator() async {
   // --- SharedPreferences (needed by CacheManager) ---
   final prefs = await SharedPreferences.getInstance();
 
-  // --- popular_links.json → LinkRepository (still loaded from bundle at startup) ---
+  // --- popular_links.json → LinkRepository ---
   final linksRaw = await rootBundle.loadString('assets/data/popular_links.json');
   final Map<String, dynamic> linksJson = jsonDecode(linksRaw) as Map<String, dynamic>;
   final Map<String, LinkConfig> platforms = linksJson.map(
@@ -64,28 +58,10 @@ Future<void> setupLocator() async {
     () => PortfolioBloc(locator<RemoteConfigRepository>()),
   );
 
-  // --- Stub repos — replaced by PortfolioBloc loaded state at runtime.
-  // Kept so any GetIt call sites that haven't migrated yet don't throw. ---
-  locator.registerLazySingleton<ProfileRepository>(
-    () => ProfileRepositoryImpl(ProfileData.empty()),
-  );
-  locator.registerLazySingleton<TileRepository>(
-    () => TileRepositoryImpl(const []),
-  );
-
   // --- Analytics ---
   locator.registerLazySingleton<AnalyticsRepository>(
     () => LukehogAnalyticsRepository(
       LukehogClient(AnalyticsConstants.lukehogAppId),
     ),
-  );
-  locator.registerLazySingleton<TrackPortfolioOpened>(
-    () => TrackPortfolioOpened(locator<AnalyticsRepository>()),
-  );
-  locator.registerLazySingleton<TrackTileTapped>(
-    () => TrackTileTapped(locator<AnalyticsRepository>()),
-  );
-  locator.registerLazySingleton<TrackError>(
-    () => TrackError(locator<AnalyticsRepository>()),
   );
 }

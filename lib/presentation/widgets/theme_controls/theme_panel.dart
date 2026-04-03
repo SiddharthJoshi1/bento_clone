@@ -1,4 +1,4 @@
-import 'package:bento_clone/presentation/theme/app_theme.dart';
+import 'package:bento_clone/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/theme_flavour.dart';
@@ -16,13 +16,8 @@ class ThemePanel extends StatelessWidget {
     required this.onFlavourSelected,
   });
 
-  /// ID of the currently active flavour — used to highlight the selected swatch.
   final String activeId;
-
-  /// Current brightness mode — determines which variant colours are shown.
   final ThemeMode activeMode;
-
-  /// Called when the user selects a flavour.
   final ValueChanged<ThemeFlavour> onFlavourSelected;
 
   @override
@@ -31,7 +26,7 @@ class ThemePanel extends StatelessWidget {
       width: 150,
       child: Card(
         elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius:AppRadii.card),
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.card),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(

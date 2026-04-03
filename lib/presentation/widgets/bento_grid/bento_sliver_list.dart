@@ -7,8 +7,8 @@ import '../../../../core/constants.dart';
 import '../../../../domain/entities/tile_config.dart';
 import '../../../core/responsive/breakpoints.dart';
 import '../../../core/responsive/mobile_tile_adapter.dart';
-import '../../utils/tile_size_extension.dart';
-import '../profile_section.dart';
+import '../../extensions/tile_size_extension.dart';
+import '../profile/profile_section.dart';
 import 'tiles/smart_bento_tile.dart';
 
 class BentoSliverList extends StatelessWidget {

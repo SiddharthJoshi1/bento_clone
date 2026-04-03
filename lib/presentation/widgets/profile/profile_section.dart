@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../core/responsive/breakpoints.dart';
-import '../../domain/entities/profile_data.dart';
-import '../theme/app_theme.dart';
+import '../../../core/responsive/breakpoints.dart';
+import '../../../core/theme/app_theme.dart';
+import '../../../domain/entities/profile_data.dart';
 
 /// Profile display — adapts its own layout for desktop and mobile.
 ///

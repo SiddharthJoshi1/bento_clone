@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../domain/entities/tile_config.dart';
+import '../../../../extensions/colour_extension.dart';
 import '../../../../utils/app_styles.dart';
-import '../../../../utils/colour_extension.dart';
 import '../../../../utils/tile_constants.dart';
 
 class TextTileRenderer extends StatelessWidget {

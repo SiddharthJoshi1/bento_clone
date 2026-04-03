@@ -1,4 +1,4 @@
-import '../../data/repos/remote_config_repo.dart';
+import '../../../domain/entities/portfolio_content.dart';
 
 /// States for [PortfolioBloc].
 abstract class PortfolioState {

@@ -1,19 +1,17 @@
 import 'dart:ui';
 
-import 'package:bento_clone/core/theme/theme_cubit.dart';
-import 'package:bento_clone/core/theme/theme_state.dart';
+import 'package:bento_clone/presentation/blocs/theme/theme_cubit.dart';
 import 'package:bento_clone/presentation/pages/home_page.dart';
-import 'package:bento_clone/presentation/theme/app_theme.dart';
-import 'package:bento_clone/presentation/widgets/profile_section.dart';
+import 'package:bento_clone/core/theme/app_theme.dart';
+import 'package:bento_clone/presentation/widgets/profile/profile_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/injector.dart';
-import 'presentation/blocs/portfolio_bloc.dart';
-import 'presentation/blocs/portfolio_event.dart';
-import 'presentation/blocs/portfolio_state.dart';
-import 'domain/usecases/track_error.dart';
-import 'domain/usecases/track_portfolio_opened.dart';
+import 'domain/repos/analytics_repo.dart';
+import 'presentation/blocs/portfolio/portfolio_bloc.dart';
+import 'presentation/blocs/portfolio/portfolio_event.dart';
+import 'presentation/blocs/portfolio/portfolio_state.dart';
 import 'presentation/widgets/bento_grid/bento_sliver_list.dart';
 import 'presentation/widgets/bento_states/bento_error_screen.dart';
 import 'presentation/widgets/bento_states/bento_loading_screen.dart';
@@ -23,18 +21,18 @@ void main() async {
   await setupLocator();
 
   // --- Analytics: cold start ---
-  locator<TrackPortfolioOpened>().call();
+  locator<AnalyticsRepository>().trackPortfolioOpened();
 
   // --- Analytics: error hooks ---
-  final trackError = locator<TrackError>();
+  final analytics = locator<AnalyticsRepository>();
 
   FlutterError.onError = (details) {
     FlutterError.presentError(details);
-    trackError.call('flutter_error');
+    analytics.trackError('flutter_error');
   };
 
   PlatformDispatcher.instance.onError = (error, stack) {
-    trackError.call('platform_error');
+    analytics.trackError('platform_error');
     return false;
   };
 
@@ -89,5 +87,3 @@ class _PortfolioShell extends StatelessWidget {
     );
   }
 }
-
-
