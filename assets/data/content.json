@@ -1,5 +1,5 @@
 {
-  "version": "1.0.2",
+  "version": "1.0.3",
   "profile": {
     "name": "Sid",
     "bio": "Product Engineer who builds high-quality, scalable applications. My goal is to create software people will love.",
@@ -9,43 +9,40 @@
     {
       "type": "section_title",
       "tile_size": "full_bar",
-      "title": "My pattern for building clear, testable, and scalable user journeys."
-    },
-    {
-      "type": "link",
-      "tile_size": "half_tower",
-      "title": "Bubbles: Breaking Down Complex Journeys",
-      "url": "https://github.com/TinyBigLabs/bubbles_example",
-      "image_path": "assets/bubbles.png"
-    },
-    {
-      "type": "section_title",
-      "tile_size": "full_bar",
       "title": "How I work."
     },
     {
       "type": "text",
       "tile_size": "half_card",
       "title": "I believe the best products are built by teams who communicate with clarity and empathy.",
-      "colour": "#f9aa3a"
+      "colour": "#F45B26"
     },
     {
       "type": "section_title",
       "tile_size": "full_bar",
-      "title": "Find me here."
+      "title": "Find me here. 👋"
     },
     {
       "type": "map",
-      "tile_size": "half_card",
+      "tile_size": "half_bar",
       "title": "Based in the UK",
       "latitude": 51.50955119018524,
       "longitude": -0.12741695598862016
     },
     {
       "type": "link",
-      "tile_size": "quarter_card",
+      "tile_size": "half_bar",
       "title": "Get my CV.",
-      "url": "https://sidjoshi.notion.site/CV-31282118ee9080fe8e51e36781755b9d?pvs=143"
+      "url": "https://sidjoshi.notion.site/CV-31282118ee9080fe8e51e36781755b9d?pvs=143",
+      "colour": "#C44A3A"
+    },
+    {
+      "type": "link",
+      "tile_size": "half_card",
+      "title": "Check out my Github.",
+      "url": "https://www.github.com/SiddharthJoshi1",
+      "image_path": "assets/untitled_dragon_game.gif",
+      "colour": "#2C2C2C"
     },
     {
       "type": "link",
@@ -57,21 +54,54 @@
     {
       "type": "section_title",
       "tile_size": "full_bar",
-      "title": "Projects & Writings"
+      "title": "Stuff I've Shipped 🚀"
+    },
+    {
+      "type": "image",
+      "tile_size": "half_tower",
+      "title": "bento_layout — Skyline bin-packing grid for Flutter. Published on pub.dev.",
+      "url": "https://pub.dev/packages/bento_layout",
+      "image_path": "assets/bento_layout_gif.gif"
     },
     {
       "type": "link",
       "tile_size": "half_tower",
-      "title": "Sometimes I write stuff. Come check it out!",
+      "title": "Bubbles: Breaking Down Complex Journeys",
+      "url": "https://github.com/TinyBigLabs/bubbles_example",
+      "image_path": "assets/bubbles.png"
+    },
+    {
+      "type": "section_title",
+      "tile_size": "full_bar",
+      "title": "Writing ✍️"
+    },
+    {
+      "type": "link",
+      "tile_size": "quarter_tower",
+      "title": "Check out my Substack.",
       "url": "https://www.substack.com/@builtbysid",
       "image_path": "assets/Sid Gen.png"
     },
     {
-      "type": "link",
-      "tile_size": "half_tower",
-      "title": "Check out my Github.",
-      "url": "https://www.github.com/SiddharthJoshi1",
-      "image_path": "assets/untitled_dragon_game.gif"
+      "type": "image",
+      "tile_size": "quarter_tower",
+      "title": "Creating a Bento Layout in Flutter",
+      "url": "https://builtbysid.substack.com/p/creating-a-bento-layout-in-flutter",
+      "image_path": "assets/bento_article_image.jpeg"
+    },
+    {
+      "type": "image",
+      "tile_size": "quarter_tower",
+      "title": "WTF is a Quadtree?",
+      "url": "https://builtbysid.substack.com/p/wtf-is-a-quadtree",
+      "image_path": "assets/quadtree_article_image.png"
+    },
+    {
+      "type": "image",
+      "tile_size": "quarter_tower",
+      "title": "Optimising Complex Journeys",
+      "url": " https://tinybigtheory.substack.com/p/bubbles-breaking-down-complex-journeys",
+      "image_path": "assets/bubbles_article_image.png"
     },
     {
       "type": "section_title",
