@@ -46,7 +46,6 @@ class RemoteConfigRepository {
       }
     } catch (err) {
       // Remote fetch failed — continue with cached/bundled content.
-      print('Remote fetch failed, using cached content: $err');
     }
 
     // --- Step 3: parse and return ---

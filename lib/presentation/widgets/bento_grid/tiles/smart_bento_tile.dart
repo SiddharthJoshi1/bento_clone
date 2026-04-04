@@ -13,6 +13,8 @@ import 'renderers/link_tile_renderer.dart';
 import 'renderers/map_tile_renderer.dart';
 import 'renderers/section_title_renderer.dart';
 import 'renderers/text_tile_renderer.dart';
+import 'renderers/interactive_widget_tile_renderer.dart';
+import 'renderers/video_tile_renderer.dart';
 
 /// A factory widget that delegates rendering to the appropriate tile renderer
 /// based on [TileConfig.type]. Each renderer is responsible for its own layout.
@@ -39,9 +41,11 @@ class SmartBentoTile extends StatelessWidget {
         return SectionTitleRenderer(config: config);
       case TileType.map:
         return MapTileRenderer(config: config);
-      default:
-        return const Center(child: Text("Unknown Type"));
-    }
+      case TileType.video:
+        return VideoTileRenderer(config: config);
+      case TileType.widgets:
+        return InteractiveWidgetsTileRenderer(config: config);
+      }
   }
 
   Color _getBackgroundCardColour() {
