@@ -37,7 +37,7 @@ enum TileSize {
   fullTower,
 }
 
-enum TileType { sectionTitle, map, link, image, video, text }
+enum TileType { sectionTitle, map, link, image, video, text, widgets }
 
 class TileConfig {
   final String? title;
@@ -48,6 +48,13 @@ class TileConfig {
   final TileType type;
   final double? latitude;
   final double? longitude;
+  /// Only used by [TileType.widgets] tiles — identifies the widget in [WidgetRegistry].
+  final String? widgetId;
+  /// Arbitrary config map passed to [InteractiveWidget.buildWithConfig].
+  final Map<String, dynamic>? widgetConfig;
+  /// Only used by [TileType.video] tiles — asset path or network URL to the
+  /// video file. Separate from [imagePath] and [url] so all three can coexist.
+  final String? videoPath;
 
   TileConfig({
     required this.type,
@@ -58,6 +65,9 @@ class TileConfig {
     this.url,
     this.latitude,
     this.longitude,
+    this.widgetId,
+    this.widgetConfig,
+    this.videoPath,
   });
 
 
@@ -70,6 +80,9 @@ class TileConfig {
         colour: json['colour'] as String?,
         latitude: (json['latitude'] as num?)?.toDouble(),
         longitude: (json['longitude'] as num?)?.toDouble(),
+        widgetId: json['widget_id'] as String?,
+        widgetConfig: json['widget_config'] as Map<String, dynamic>?,
+        videoPath: json['video_path'] as String?,
       );
 
   static TileSize _sizeFromString(String s) => switch (s) {
@@ -102,6 +115,8 @@ class TileConfig {
         'text'          => TileType.text,
         'image'         => TileType.image,
         'map'           => TileType.map,
+        'video'         => TileType.video,
+        'widgets'       => TileType.widgets,
         _               => TileType.text,
       };
 
@@ -126,6 +141,9 @@ class TileConfig {
     TileType? type,
     double? latitude,
     double? longitude,
+    String? widgetId,
+    Map<String, dynamic>? widgetConfig,
+    String? videoPath,
   }) {
     return TileConfig(
       type: type ?? this.type,
@@ -136,6 +154,9 @@ class TileConfig {
       colour: colour ?? this.colour,
       latitude: latitude ?? this.latitude,
       longitude: longitude ?? this.longitude,
+      widgetId: widgetId ?? this.widgetId,
+      widgetConfig: widgetConfig ?? this.widgetConfig,
+      videoPath: videoPath ?? this.videoPath,
     );
   }
 }
