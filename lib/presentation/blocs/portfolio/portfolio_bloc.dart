@@ -33,7 +33,7 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
     emit(const PortfolioLoading());
     try {
       final content = await _repo.load();
-      // convertTileAssetPathToNetworkPath(content);
+      convertTileAssetPathToNetworkPath(content);
       emit(PortfolioLoaded(content));
     } catch (e) {
       emit(PortfolioError(e.toString()));
