@@ -1,5 +1,5 @@
 {
-  "version": "1.0.3",
+  "version": "1.0.4",
   "profile": {
     "name": "Sid",
     "bio": "Product Engineer who builds high-quality, scalable applications. My goal is to create software people will love.",
@@ -100,7 +100,7 @@
       "type": "image",
       "tile_size": "quarter_tower",
       "title": "Optimising Complex Journeys",
-      "url": " https://tinybigtheory.substack.com/p/bubbles-breaking-down-complex-journeys",
+      "url": "https://tinybigtheory.substack.com/p/bubbles-breaking-down-complex-journeys",
       "image_path": "assets/bubbles_article_image.png"
     },
     {
