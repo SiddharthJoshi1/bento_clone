@@ -49,7 +49,7 @@ class SmartBentoTile extends StatelessWidget {
   }
 
   Color _getBackgroundCardColour() {
-    if (config.type == TileType.link) {
+    if (config.type == TileType.link && config.colour == null) {
       final brandColour =
           locator<LinkRepository>().getLinkData(config.url ?? "").brandColour;
       return brandColour == "#000000" || brandColour == "#FFFFFF"
@@ -58,11 +58,8 @@ class SmartBentoTile extends StatelessWidget {
                 .getLinkData(config.url ?? "")
                 .brandColour
                 .toSuperLightColour();
-    } else if (config.type == TileType.text) {
-      return config.colour != null ? config.colour!.toColour() : Colors.white;
-    } else {
-      return Colors.transparent;
-    }
+    }  
+      return config.colour != null ? config.colour!.toColour() : Colors.transparent;
   }
 
   Widget _buildBackgroundCard(Widget child, Color backgroundColour) {
