@@ -1,5 +1,4 @@
 import 'interactive_widget.dart';
-import 'widgets/particle_widget.dart';
 
 /// Static registry mapping [InteractiveWidget.widgetId] → factory function.
 ///
@@ -12,7 +11,6 @@ class WidgetRegistry {
   WidgetRegistry._();
 
   static final Map<String, InteractiveWidget Function()> _widgets = {
-    'particle_v1': () => const ParticleWidget(),
   };
 
   /// Returns an [InteractiveWidget] instance for [widgetId], or null if not found.
