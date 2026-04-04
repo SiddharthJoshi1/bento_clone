@@ -66,8 +66,8 @@ class _ThemeControlsState extends State<ThemeControls>
       builder: (context, state) {
         final cubit = context.read<ThemeCubit>();
 
-        return SafeArea(
-          minimum: const EdgeInsets.all(16),
+        return Padding(
+          padding: const EdgeInsets.all(16),
           child: Align(
             alignment: Alignment.topRight,
             child: Column(

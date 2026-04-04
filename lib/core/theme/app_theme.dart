@@ -18,6 +18,7 @@ library;
 import 'package:bento_clone/core/constants.dart';
 import 'package:bento_clone/core/theme/theme_flavour.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // ---------------------------------------------------------------------------
@@ -99,6 +100,16 @@ class AppTheme {
           );
 
     return ThemeData(
+      appBarTheme: AppBarTheme(
+        backgroundColor: variant.background,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          systemNavigationBarColor: variant.background,
+          statusBarColor: variant.background,
+          statusBarIconBrightness:
+              brightness == Brightness.light ? Brightness.dark : Brightness.light,
+        ),
+        elevation: 0,
+      ),
       scaffoldBackgroundColor: variant.background,
       useMaterial3: true,
       brightness: brightness,
