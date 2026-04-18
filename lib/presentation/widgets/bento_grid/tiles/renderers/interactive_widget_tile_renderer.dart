@@ -29,7 +29,7 @@ class InteractiveWidgetsTileRenderer extends StatelessWidget {
       return _buildError(context, 'Unknown widget: $id');
     }
 
-    return widget.buildWithConfig(config.widgetConfig ?? {});
+    return widget.buildWithConfig(config.widgetConfig ?? {}, colour: config.colour);
   }
 
   Widget _buildError(BuildContext context, String message) {

@@ -36,8 +36,10 @@ abstract class InteractiveWidget {
   /// Searchable tags — e.g. ['animation', 'physics', 'data_viz'].
   List<String> get tags;
 
-  /// Builds the widget using optional config values from [TileConfig.widgetConfig].
-  /// Implementations should be defensive — use `.containsKey` / fallbacks
-  /// since config arrives from JSON and keys may be absent.
-  Widget buildWithConfig(Map<String, dynamic> config);
+  /// Builds the widget using optional config values from [TileConfig.widgetConfig]
+  /// and the tile's background [colour] string (e.g. "#1A1A1A") if set.
+  /// Implementations should derive text colour from [colour] using
+  /// [ColourBrightness.contrastingTextColour] rather than hardcoding.
+  /// Use defensive fallbacks — config arrives from JSON and keys may be absent.
+  Widget buildWithConfig(Map<String, dynamic> config, {String? colour});
 }
