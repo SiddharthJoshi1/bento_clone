@@ -1,5 +1,5 @@
 {
-  "version": "1.0.4",
+  "version": "1.0.5",
   "profile": {
     "name": "Sid",
     "bio": "Product Engineer who builds high-quality, scalable applications. My goal is to create software people will love.",
@@ -21,13 +21,6 @@
       "type": "section_title",
       "tile_size": "full_bar",
       "title": "Find me here. 👋"
-    },
-    {
-      "type": "map",
-      "tile_size": "half_bar",
-      "title": "Based in the UK",
-      "latitude": 51.50955119018524,
-      "longitude": -0.12741695598862016
     },
     {
       "type": "link",
@@ -102,6 +95,29 @@
       "title": "Optimising Complex Journeys",
       "url": "https://tinybigtheory.substack.com/p/bubbles-breaking-down-complex-journeys",
       "image_path": "assets/bubbles_article_image.png"
+    },
+    {
+      "type": "section_title",
+      "tile_size": "full_bar",
+      "title": "Some cool widgets I've built 🧩"
+    },
+    {
+      "type": "widgets",
+      "tile_size": "half_tower",
+      "title": "Spin the wheel",
+      "widget_id": "spinner_v1",
+      "colour": "#050404",
+      "widget_config": {
+        "title": "🌙 Tonight I should...",
+        "items": [
+          "😴",
+          "🍕",
+          "📱",
+          "🎮",
+          "📚",
+          "🏃"
+        ]
+      }
     },
     {
       "type": "section_title",
