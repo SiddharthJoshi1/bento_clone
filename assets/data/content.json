@@ -1,5 +1,5 @@
 {
-  "version": "1.0.5",
+  "version": "1.0.6",
   "profile": {
     "name": "Sid",
     "bio": "Product Engineer who builds high-quality, scalable applications. My goal is to create software people will love.",
@@ -103,7 +103,7 @@
     },
     {
       "type": "widgets",
-      "tile_size": "half_tower",
+      "tile_size": "full_tower",
       "title": "Spin the wheel",
       "widget_id": "spinner_v1",
       "colour": "#050404",
