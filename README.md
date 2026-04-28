@@ -44,6 +44,14 @@ Analytics requires a `LUKEHOG_APP_ID` environment variable injected at build tim
 ```bash
 flutter run --dart-define=LUKEHOG_APP_ID=your_id
 ```
+## Documentation
+
+| Guide | What it covers |
+|---|---|
+| [`SETUP.md`](./SETUP.md) | Fork the template, configure your content branch, deploy to GitHub Pages or Firebase |
+| [`WIDGET_GUIDE.md`](./WIDGET_GUIDE.md) | Build your own interactive widgets from scratch — step-by-step with a full example |
+| [`CLAUDE.md`](./CLAUDE.md) | Architecture reference, content schema, layer rules — for LLM agents and contributors |
+
 
 ## Content
 
