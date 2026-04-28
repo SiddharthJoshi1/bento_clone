@@ -47,3 +47,5 @@ app.*.map.json
 dont_push/
 
 .env
+
+test/goldens/goldens
