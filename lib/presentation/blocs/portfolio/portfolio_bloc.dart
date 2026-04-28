@@ -40,12 +40,24 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
     }
   }
 
-  void convertTileAssetPathToNetworkPath(PortfolioContent content) {
+  /// Converts relative asset image paths to absolute GitHub raw content URLs.
+  ///
+  /// Paths that are already absolute (start with 'http') are left untouched —
+  /// this covers external URLs such as Unsplash images or any other remote source.
+  ///
+  /// [baseUrl] is optional and defaults to [RemoteConstants.baseContentUrl].
+  /// Pass an explicit value in tests to avoid depending on the dart-define.
+  void convertTileAssetPathToNetworkPath(
+    PortfolioContent content, {
+    String? baseUrl,
+  }) {
+    final base = baseUrl ?? RemoteConstants.baseContentUrl;
     for (int i = 0; i < content.tiles.length; i++) {
-      TileConfig tileAtIndex = content.tiles[i];
-      if (tileAtIndex.imagePath != null) {
-        content.tiles[i] = tileAtIndex.copyWith(
-          imagePath: RemoteConstants.baseContentUrl + tileAtIndex.imagePath!,
+      final tile = content.tiles[i];
+      final path = tile.imagePath;
+      if (path != null && !path.startsWith('http')) {
+        content.tiles[i] = tile.copyWith(
+          imagePath: base + path,
         );
       }
     }

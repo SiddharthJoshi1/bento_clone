@@ -39,7 +39,12 @@ class MapConstants {
 
   /// User-agent package name sent with tile requests.
   /// OSM policy requires a clear, unique identifier — do not change to a generic value.
-  static const String userAgentPackageName = 'dev.builtbysid.bento_clone';
+  /// Injected at build time via `--dart-define=MAP_USER_AGENT=your.package.name`.
+  /// Falls back to a generic identifier if not set.
+  static const String userAgentPackageName = String.fromEnvironment(
+    'MAP_USER_AGENT',
+    defaultValue: 'dev.bento_template.portfolio',
+  );
 
   /// Default zoom level for map tiles.
   static const double defaultZoom = 14.0;
@@ -47,13 +52,21 @@ class MapConstants {
 
 /// Remote content constants.
 class RemoteConstants {
-  /// Raw GitHub URL serving content.json from the `content` branch.
-  /// Push to that branch to update the live portfolio — no rebuild needed.
-  static const String baseContentUrl = "https://raw.githubusercontent.com/SiddharthJoshi1/bento_clone/content/"; 
+  /// Raw GitHub base URL serving content.json from the `content` branch.
+  ///
+  /// Injected at build time via `--dart-define=CONTENT_BASE_URL=...`.
+  /// Format: `https://raw.githubusercontent.com/<user>/<repo>/content/`
+  /// (trailing slash required).
+  ///
+  /// Falls back to an empty string — the app will use the bundled asset
+  /// fallback in that case, so nothing breaks in debug without the flag.
+  static const String baseContentUrl = String.fromEnvironment(
+    'CONTENT_BASE_URL',
+    defaultValue: '',
+  );
 
-  static const String contentJsonUrlPath = 
+  static const String contentJsonUrlPath =
       '${baseContentUrl}assets/data/content.json';
-  
 
   /// SharedPreferences key for the cached content JSON string.
   static const String contentCacheKey = 'cached_content_json';

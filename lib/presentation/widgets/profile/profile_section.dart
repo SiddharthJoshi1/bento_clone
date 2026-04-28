@@ -31,13 +31,13 @@ class ProfileSection extends StatelessWidget {
           if (isDesktop)
             CircleAvatar(
               radius: 100,
-              backgroundImage: AssetImage(profile.avatarPath),
+              backgroundImage: _resolveAvatarImage(profile.avatarPath),
             )
           else
             Center(
               child: CircleAvatar(
                 radius: 100,
-                backgroundImage: AssetImage(profile.avatarPath),
+                backgroundImage: _resolveAvatarImage(profile.avatarPath),
               ),
             ),
           const SizedBox(height: 50),
@@ -60,5 +60,11 @@ class ProfileSection extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  /// Returns a [NetworkImage] for absolute URLs, [AssetImage] for asset paths.
+  ImageProvider _resolveAvatarImage(String path) {
+    if (path.startsWith('http')) return NetworkImage(path);
+    return AssetImage(path);
   }
 }
