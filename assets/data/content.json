@@ -1,5 +1,5 @@
 {
-  "version": "1.0.6",
+  "version": "1.0.7",
   "profile": {
     "name": "Sid",
     "bio": "Product Engineer who builds high-quality, scalable applications. My goal is to create software people will love.",
@@ -72,7 +72,7 @@
       "type": "link",
       "tile_size": "quarter_tower",
       "title": "Check out my Substack.",
-      "url": "https://www.substack.com/@builtbysid",
+      "url": "https://builtbysid.substack.com",
       "image_path": "assets/Sid Gen.png"
     },
     {
